@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * @GST_VIDEO_FORMAT_I420: planar 4:2:0 YUV
  * @GST_VIDEO_FORMAT_YV12: planar 4:2:0 YVU (like I420 but UV planes swapped)
  * @GST_VIDEO_FORMAT_YUY2: packed 4:2:2 YUV (Y0-U0-Y1-V0 Y2-U2-Y3-V2 Y4 ...)
- * @GST_VIDEO_FORMAT_UYVY: packed 4:2:2 YUV (U0-Y0-V0-Y1 U2-Y2-V2-Y3 U4 ...) 
+ * @GST_VIDEO_FORMAT_UYVY: packed 4:2:2 YUV (U0-Y0-V0-Y1 U2-Y2-V2-Y3 U4 ...)
  * @GST_VIDEO_FORMAT_AYUV: packed 4:4:4 YUV with alpha channel (A0-Y0-U0-V0 ...)
  * @GST_VIDEO_FORMAT_RGBx: sparse rgb packed into 32 bit, space last
  * @GST_VIDEO_FORMAT_BGRx: sparse reverse rgb packed into 32 bit, space last
@@ -264,13 +264,13 @@ typedef enum {
 
 #define GST_VIDEO_CAPS_RGBx \
     __GST_VIDEO_CAPS_MAKE_32 (1, 2, 3)
-  
+
 #define GST_VIDEO_CAPS_xRGB \
     __GST_VIDEO_CAPS_MAKE_32 (2, 3, 4)
-  
+
 #define GST_VIDEO_CAPS_BGRx \
     __GST_VIDEO_CAPS_MAKE_32 (3, 2, 1)
-  
+
 #define GST_VIDEO_CAPS_xBGR \
     __GST_VIDEO_CAPS_MAKE_32 (4, 3, 2)
 
@@ -278,13 +278,13 @@ typedef enum {
 
 #define GST_VIDEO_CAPS_RGBA \
     __GST_VIDEO_CAPS_MAKE_32A (1, 2, 3, 4)
-  
+
 #define GST_VIDEO_CAPS_ARGB \
     __GST_VIDEO_CAPS_MAKE_32A (2, 3, 4, 1)
-  
+
 #define GST_VIDEO_CAPS_BGRA \
     __GST_VIDEO_CAPS_MAKE_32A (3, 2, 1, 4)
-  
+
 #define GST_VIDEO_CAPS_ABGR \
     __GST_VIDEO_CAPS_MAKE_32A (4, 3, 2, 1)
 
@@ -300,7 +300,7 @@ typedef enum {
   #define GST_VIDEO_CAPS_BGRx_HOST_ENDIAN \
       GST_VIDEO_CAPS_xRGB
 #endif
-      
+
 /* 15/16 bit */
   
 #define GST_VIDEO_CAPS_RGB_16 \
@@ -470,6 +470,8 @@ gboolean       gst_video_format_parse_caps (const GstCaps  * caps,
 gboolean       gst_video_format_parse_caps_interlaced  (GstCaps  * caps,
                                                         gboolean * interlaced);
 
+gboolean gst_video_format_parse_caps_strided (GstCaps * caps, GstVideoFormat * format,
+    int *width, int *height, int *rowstride);
 
 gboolean       gst_video_parse_caps_pixel_aspect_ratio (GstCaps  * caps,
                                                         int      * par_n,
@@ -501,6 +503,10 @@ GstCaps *      gst_video_format_new_caps_interlaced (GstVideoFormat format,
                                                      gboolean interlaced);
 
 GstCaps *      gst_video_format_new_template_caps (GstVideoFormat format);
+
+GstCaps * gst_video_format_new_caps_strided (GstVideoFormat format,
+    int width, int height, int rowstride,
+    int framerate_n, int framerate_d, int par_n, int par_d);
 
 /* format properties */
 
@@ -543,6 +549,9 @@ int            gst_video_format_get_component_offset (GstVideoFormat format,
 int            gst_video_format_get_size             (GstVideoFormat format,
                                                       int            width,
                                                       int            height) G_GNUC_CONST;
+
+int gst_video_format_get_size_strided (GstVideoFormat format,
+    int width, int height, int rowstride);
 
 gboolean       gst_video_get_size_from_caps (const GstCaps * caps, gint * size);
 
@@ -603,7 +612,6 @@ GstBuffer *    gst_video_convert_frame       (GstBuffer     * buf,
                                               const GstCaps * to_caps,
                                               GstClockTime    timeout,
                                               GError       ** error);
-
 G_END_DECLS
 
 #endif /* __GST_VIDEO_H__ */

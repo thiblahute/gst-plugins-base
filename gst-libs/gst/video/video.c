@@ -308,30 +308,15 @@ gst_video_parse_caps_chroma_site (GstCaps * caps)
 }
 
 /**
- * gst_video_format_parse_caps:
- * @caps: the #GstCaps to parse
- * @format: the #GstVideoFormat of the video represented by @caps (output)
- * @width: the width of the video represented by @caps, may be NULL (output)
- * @height: the height of the video represented by @caps, may be NULL (output)
- *
- * Determines the #GstVideoFormat of @caps and places it in the location
- * pointed to by @format.  Extracts the size of the video and places it
- * in the location pointed to by @width and @height.  If @caps does not
- * represent a video format or does not contain height and width, the
- * function will fail and return FALSE. If @caps does not represent a raw
- * video format listed in #GstVideoFormat, but still contains video caps,
- * this function will return TRUE and set @format to #GST_VIDEO_FORMAT_UNKNOWN.
- *
- * Since: 0.10.16
- *
- * Returns: TRUE if @caps was parsed correctly.
+ * see gst_video_format_parse_caps_strided and gst_video_format_parse_caps
  */
-gboolean
-gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
-    int *width, int *height)
+static gboolean
+parse_caps (GstCaps * caps, GstVideoFormat * format, gint * width,
+    gint * height, gboolean stride_ok, gint * rowstride)
 {
   GstStructure *structure;
   gboolean ok = TRUE;
+  gboolean strided = FALSE;
 
   if (!gst_caps_is_fixed (caps))
     return FALSE;
@@ -339,7 +324,10 @@ gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
   structure = gst_caps_get_structure (caps, 0);
 
   if (format) {
-    if (gst_structure_has_name (structure, "video/x-raw-yuv")) {
+    if (gst_structure_has_name (structure, "video/x-raw-yuv") ||
+        (stride_ok &&
+            gst_structure_has_name (structure, "video/x-raw-yuv-strided") &&
+            (strided = TRUE) /* single '=' intentional */ )) {
       guint32 fourcc;
 
       ok &= gst_structure_get_fourcc (structure, "format", &fourcc);
@@ -348,7 +336,10 @@ gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
       if (*format == GST_VIDEO_FORMAT_UNKNOWN) {
         ok = FALSE;
       }
-    } else if (gst_structure_has_name (structure, "video/x-raw-rgb")) {
+    } else if (gst_structure_has_name (structure, "video/x-raw-rgb") ||
+        (stride_ok &&
+            gst_structure_has_name (structure, "video/x-raw-rgb-strided") &&
+            (strided = TRUE) /* single '=' intentional */ )) {
       int depth;
       int bpp;
       int endianness = 0;
@@ -438,6 +429,10 @@ gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
     }
   }
 
+  /* note: should we require that the caps have these fields, even if
+   * the caller does not particularly request them??
+   */
+
   if (width) {
     ok &= gst_structure_get_int (structure, "width", width);
   }
@@ -446,9 +441,68 @@ gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
     ok &= gst_structure_get_int (structure, "height", height);
   }
 
+  if (rowstride) {
+    if (strided) {
+      ok &= gst_structure_get_int (structure, "rowstride", rowstride);
+    } else {
+      *rowstride = 0;           /* not a strided format */
+    }
+  }
+
   return ok;
 }
 
+
+/**
+ * gst_video_format_parse_caps_strided:
+ * @caps: the #GstCaps to parse
+ * @format: the #GstVideoFormat of the video represented by @caps (output)
+ * @width: the width of the video represented by @caps, may be NULL (output)
+ * @height: the height of the video represented by @caps, may be NULL (output)
+ * @rowstride: the rowstride (in bytes) represented by @caps, or 0 if there
+ *    is no rowstride, may be NULL (output)
+ *
+ * Determines the #GstVideoFormat of @caps and places it in the location
+ * pointed to by @format.  Extracts the size of the video and places it
+ * in the location pointed to by @width and @height.  Extracts the row-
+ * stride and places it in the location pointed to by @rowstride.  If
+ * @caps does not represent one of the raw video formats listed in
+ * #GstVideoFormat, the function will fail and return FALSE.
+ *
+ * Since: ???
+ *
+ * Returns: TRUE if @caps was parsed correctly.
+ */
+gboolean
+gst_video_format_parse_caps_strided (GstCaps * caps, GstVideoFormat * format,
+    int *width, int *height, int *rowstride)
+{
+  return parse_caps (caps, format, width, height, TRUE, rowstride);
+}
+
+/**
+ * gst_video_format_parse_caps:
+ * @caps: the #GstCaps to parse
+ * @format: the #GstVideoFormat of the video represented by @caps (output)
+ * @width: the width of the video represented by @caps, may be NULL (output)
+ * @height: the height of the video represented by @caps, may be NULL (output)
+ *
+ * Determines the #GstVideoFormat of @caps and places it in the location
+ * pointed to by @format.  Extracts the size of the video and places it
+ * in the location pointed to by @width and @height.  If @caps does not
+ * represent one of the raw video formats listed in #GstVideoFormat, the
+ * function will fail and return FALSE.
+ *
+ * Since: 0.10.16
+ *
+ * Returns: TRUE if @caps was parsed correctly.
+ */
+gboolean
+gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
+    int *width, int *height)
+{
+  return parse_caps (caps, format, width, height, FALSE, NULL);
+}
 
 /**
  * gst_video_parse_caps_framerate:
@@ -549,16 +603,17 @@ gst_video_format_new_caps_interlaced (GstVideoFormat format,
 }
 
 static GstCaps *
-gst_video_format_new_caps_raw (GstVideoFormat format)
+gst_video_format_new_caps_raw_strided (GstVideoFormat format, int rowstride)
 {
+  GstCaps *caps = NULL;
+
   g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, NULL);
 
   if (gst_video_format_is_yuv (format)) {
-    return gst_caps_new_simple ("video/x-raw-yuv",
+    caps = gst_caps_new_simple (rowstride ?
+        "video/x-raw-yuv-strided" : "video/x-raw-yuv",
         "format", GST_TYPE_FOURCC, gst_video_format_to_fourcc (format), NULL);
-  }
-  if (gst_video_format_is_rgb (format)) {
-    GstCaps *caps;
+  } else if (gst_video_format_is_rgb (format)) {
     int red_mask = 0;
     int blue_mask = 0;
     int green_mask = 0;
@@ -668,7 +723,8 @@ gst_video_format_new_caps_raw (GstVideoFormat format)
       g_assert_not_reached ();
     }
 
-    caps = gst_caps_new_simple ("video/x-raw-rgb",
+    caps = gst_caps_new_simple (rowstride ?
+        "video/x-raw-rgb-strided" : "video/x-raw-rgb",
         "bpp", G_TYPE_INT, bpp, "depth", G_TYPE_INT, depth, NULL);
 
     if (bpp != 8) {
@@ -684,11 +740,7 @@ gst_video_format_new_caps_raw (GstVideoFormat format)
           mask >> (8 * gst_video_format_get_component_offset (format, 3, 0, 0));
       gst_caps_set_simple (caps, "alpha_mask", G_TYPE_INT, alpha_mask, NULL);
     }
-    return caps;
-  }
-
-  if (gst_video_format_is_gray (format)) {
-    GstCaps *caps;
+  } else if (gst_video_format_is_gray (format)) {
     int bpp;
     int depth;
     int endianness;
@@ -720,11 +772,39 @@ gst_video_format_new_caps_raw (GstVideoFormat format)
           "depth", G_TYPE_INT, depth,
           "endianness", G_TYPE_INT, endianness, NULL);
     }
-
-    return caps;
+  } else {
+    return NULL;
   }
 
-  return NULL;
+  if (rowstride) {
+    gst_caps_set_simple (caps, "rowstride", G_TYPE_INT, rowstride, NULL);
+  }
+
+  return caps;
+}
+
+/**
+ * gst_video_format_new_caps:
+ * @format: the #GstVideoFormat describing the raw video format
+ * @width: width of video
+ * @height: height of video
+ * @framerate_n: numerator of frame rate
+ * @framerate_d: denominator of frame rate
+ * @par_n: numerator of pixel aspect ratio
+ * @par_d: denominator of pixel aspect ratio
+ *
+ * Creates a new #GstCaps object based on the parameters provided.
+ *
+ * Since: 0.10.16
+ *
+ * Returns: a new #GstCaps object, or NULL if there was an error
+ */
+GstCaps *
+gst_video_format_new_caps (GstVideoFormat format, int width, int height,
+    int framerate_n, int framerate_d, int par_n, int par_d)
+{
+  return gst_video_format_new_caps_strided (format, width, height, 0,
+      framerate_n, framerate_d, par_n, par_d);
 }
 
 /**
@@ -747,7 +827,7 @@ gst_video_format_new_template_caps (GstVideoFormat format)
 
   g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, NULL);
 
-  caps = gst_video_format_new_caps_raw (format);
+  caps = gst_video_format_new_caps_raw_strided (format, 0);
   if (caps) {
     GValue value = { 0 };
     GValue v = { 0 };
@@ -775,10 +855,11 @@ gst_video_format_new_template_caps (GstVideoFormat format)
 }
 
 /**
- * gst_video_format_new_caps:
+ * gst_video_format_new_caps_strided:
  * @format: the #GstVideoFormat describing the raw video format
  * @width: width of video
  * @height: height of video
+ * @rowstride: the rowstride (in bytes), or 0 if no rowstride
  * @framerate_n: numerator of frame rate
  * @framerate_d: denominator of frame rate
  * @par_n: numerator of pixel aspect ratio
@@ -786,13 +867,14 @@ gst_video_format_new_template_caps (GstVideoFormat format)
  *
  * Creates a new #GstCaps object based on the parameters provided.
  *
- * Since: 0.10.16
+ * Since: ???
  *
  * Returns: a new #GstCaps object, or NULL if there was an error
  */
 GstCaps *
-gst_video_format_new_caps (GstVideoFormat format, int width,
-    int height, int framerate_n, int framerate_d, int par_n, int par_d)
+gst_video_format_new_caps_strided (GstVideoFormat format,
+    int width, int height, int rowstride,
+    int framerate_n, int framerate_d, int par_n, int par_d)
 {
   GstCaps *caps;
   GstStructure *structure;
@@ -800,7 +882,7 @@ gst_video_format_new_caps (GstVideoFormat format, int width,
   g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, NULL);
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
-  caps = gst_video_format_new_caps_raw (format);
+  caps = gst_video_format_new_caps_raw_strided (format, rowstride);
   if (caps) {
     structure = gst_caps_get_structure (caps, 0);
 
@@ -813,7 +895,6 @@ gst_video_format_new_caps (GstVideoFormat format, int width,
 
   return caps;
 }
-
 
 /**
  * gst_video_format_from_fourcc:
@@ -2103,6 +2184,75 @@ gst_video_get_size_from_caps (const GstCaps * caps, gint * size)
 
   *size = gst_video_format_get_size (format, width, height);
   return TRUE;
+}
+
+/**
+ * gst_video_format_get_size_strided:
+ * @format: a #GstVideoFormat
+ * @width: the width of video (in pixels)
+ * @height: the height of video (in pixels)
+ * @rowstride: the rowstride (in bytes), or 0 if no rowstride (in which
+ *    case the returned value is same as #gst_video_format_get_size())
+ *
+ * Calculates the total number of bytes in the raw video format, for a buffer
+ * which may have a rowstride in bytes
+ *
+ * Since: ???
+ *
+ * Returns: size (in bytes) of raw video format
+ */
+int
+gst_video_format_get_size_strided (GstVideoFormat format,
+    int width, int height, int rowstride)
+{
+  if (!rowstride)
+    return gst_video_format_get_size (format, width, height);
+
+  g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, 0);
+  g_return_val_if_fail (width > 0 && height > 0, 0);
+
+  switch (format) {
+      /* all packed formats have the same calculation, ie. rowstride * height
+       */
+    case GST_VIDEO_FORMAT_RGBx:
+    case GST_VIDEO_FORMAT_BGRx:
+    case GST_VIDEO_FORMAT_xRGB:
+    case GST_VIDEO_FORMAT_xBGR:
+    case GST_VIDEO_FORMAT_RGBA:
+    case GST_VIDEO_FORMAT_BGRA:
+    case GST_VIDEO_FORMAT_ARGB:
+    case GST_VIDEO_FORMAT_ABGR:
+    case GST_VIDEO_FORMAT_RGB16:
+    case GST_VIDEO_FORMAT_BGR16:
+    case GST_VIDEO_FORMAT_RGB15:
+    case GST_VIDEO_FORMAT_BGR15:
+    case GST_VIDEO_FORMAT_RGB:
+    case GST_VIDEO_FORMAT_BGR:
+    case GST_VIDEO_FORMAT_YUY2:
+    case GST_VIDEO_FORMAT_YVYU:
+    case GST_VIDEO_FORMAT_UYVY:
+    case GST_VIDEO_FORMAT_AYUV:
+    case GST_VIDEO_FORMAT_v210:
+    case GST_VIDEO_FORMAT_v216:
+      return GST_ROUND_UP_4 (rowstride * height);
+
+      /* these planar formats have 2x sub-sampling in the vertical direction,
+       * so U/V have half as many rows as Y:
+       */
+    case GST_VIDEO_FORMAT_I420:
+    case GST_VIDEO_FORMAT_YV12:
+      return GST_ROUND_UP_4 (2 * rowstride * height);
+
+      /* these planar formats have no sub-sampling in the vertical direction,
+       * so each plane has 'height' number of rows
+       */
+    case GST_VIDEO_FORMAT_Y41B:
+    case GST_VIDEO_FORMAT_Y42B:
+    case GST_VIDEO_FORMAT_Y444:
+      return GST_ROUND_UP_4 (3 * rowstride * height);
+    default:
+      return 0;
+  }
 }
 
 /**

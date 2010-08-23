@@ -191,7 +191,9 @@ static GstStaticPadTemplate src_template_factory =
         "video/x-surface;"
         GST_VIDEO_CAPS_YUV ("{I420, YV12, AYUV, YUY2, UYVY, v308, v210,"
             " v216, Y41B, Y42B, Y444, Y800, Y16, NV12, NV21, UYVP, A420,"
-            " YUV9, IYU1}"))
+            " YUV9, IYU1}") ";"
+        GST_VIDEO_CAPS_YUV_STRIDED ("{AYUV, I420, UYVY, NV12, NV21}",
+            "[0, max]"))
     );
 
 static GstStaticPadTemplate video_sink_template_factory =
@@ -211,7 +213,9 @@ static GstStaticPadTemplate video_sink_template_factory =
         "video/x-surface;"
         GST_VIDEO_CAPS_YUV ("{I420, YV12, AYUV, YUY2, UYVY, v308, v210,"
             " v216, Y41B, Y42B, Y444, Y800, Y16, NV12, NV21, UYVP, A420,"
-            " YUV9, IYU1}"))
+            " YUV9, IYU1}") ";"
+        GST_VIDEO_CAPS_YUV_STRIDED ("{AYUV, I420, UYVY, NV12, NV21}",
+            "[0, max]"))
     );
 
 static GstStaticPadTemplate text_sink_template_factory =
@@ -787,12 +791,13 @@ gst_text_overlay_setcaps (GstPad * pad, GstCaps * caps)
 
   overlay->width = 0;
   overlay->height = 0;
+  overlay->rowstride = 0;
   structure = gst_caps_get_structure (caps, 0);
   fps = gst_structure_get_value (structure, "framerate");
 
   if (fps
-      && gst_video_format_parse_caps (caps, &overlay->format, &overlay->width,
-          &overlay->height)) {
+      && gst_video_format_parse_caps_strided (caps, &overlay->format,
+          &overlay->width, &overlay->height, &overlay->rowstride)) {
     ret = gst_pad_set_caps (overlay->srcpad, caps);
   }
 
@@ -1446,14 +1451,21 @@ gst_text_overlay_render_pangocairo (GstTextOverlay * overlay,
 #define BOX_XPAD         6
 #define BOX_YPAD         6
 
+static gint
+gst_text_overlay_get_stride (GstTextOverlay * overlay, gint component)
+{
+  if (overlay->rowstride)
+    return overlay->rowstride;
+  return gst_video_format_get_row_stride (overlay->format, 0, overlay->width);
+}
+
 static inline void
 gst_text_overlay_shade_planar_Y (GstTextOverlay * overlay, guchar * dest,
     gint x0, gint x1, gint y0, gint y1)
 {
   gint i, j, dest_stride;
 
-  dest_stride = gst_video_format_get_row_stride (overlay->format, 0,
-      overlay->width);
+  dest_stride = gst_text_overlay_get_stride (overlay, 0);
 
   x0 = CLAMP (x0 - BOX_XPAD, 0, overlay->width);
   x1 = CLAMP (x1 + BOX_XPAD, 0, overlay->width);
@@ -1520,7 +1532,9 @@ static inline void
 gst_text_overlay_shade_xRGB (GstTextOverlay * overlay, guchar * dest,
     gint x0, gint x1, gint y0, gint y1)
 {
-  gint i, j;
+  gint i, j, dest_stride;
+
+  dest_stride = gst_text_overlay_get_stride (overlay, 0);
 
   x0 = CLAMP (x0 - BOX_XPAD, 0, overlay->width);
   x1 = CLAMP (x1 + BOX_XPAD, 0, overlay->width);
@@ -1532,7 +1546,7 @@ gst_text_overlay_shade_xRGB (GstTextOverlay * overlay, guchar * dest,
     for (j = x0; j < x1; j++) {
       gint y, y_pos, k;
 
-      y_pos = (i * 4 * overlay->width) + j * 4;
+      y_pos = (i * dest_stride) + j * 4;
       for (k = 0; k < 4; k++) {
         y = dest[y_pos + k] + overlay->shading_value;
         dest[y_pos + k] = CLAMP (y, 0, 255);

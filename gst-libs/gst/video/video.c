@@ -602,24 +602,41 @@ gst_video_format_new_caps_interlaced (GstVideoFormat format,
   return res;
 }
 
-static GstCaps *
-gst_video_format_new_caps_raw_strided (GstVideoFormat format, int rowstride)
+/**
+ * gst_video_format_new_caps_simple:
+ * @format: the #GstVideoFormat describing the raw video format
+ * @rowstride: 0 for unstrided, -1 for any stride (unfixed), or other
+ *     for fixed stride
+ * @fieldname: first field to set
+ * @...: additional arguments
+ *
+ * Creates a new #GstCaps object based on the parameters provided.
+ *
+ * Since: ???
+ *
+ * Returns: a new #GstCaps object, or NULL if there was an error
+ */
+GstCaps *
+gst_video_format_new_caps_simple (GstVideoFormat format, int rowstride,
+    const char *fieldname, ...)
 {
-  GstCaps *caps = NULL;
+  va_list varargs;
+  GstStructure *s;
 
   g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, NULL);
 
   if (gst_video_format_is_yuv (format)) {
-    caps = gst_caps_new_simple (rowstride ?
+    s = gst_structure_new (rowstride ?
         "video/x-raw-yuv-strided" : "video/x-raw-yuv",
-        "format", GST_TYPE_FOURCC, gst_video_format_to_fourcc (format), NULL);
+        "format", GST_TYPE_FOURCC, gst_video_format_to_fourcc (format),
+        NULL);
   } else if (gst_video_format_is_rgb (format)) {
     int red_mask = 0;
     int blue_mask = 0;
     int green_mask = 0;
-    int alpha_mask;
-    int depth;
-    int bpp;
+    int alpha_mask = 0;
+    int depth = 0;
+    int bpp = 0;
     gboolean have_alpha;
     unsigned int mask = 0;
 
@@ -723,12 +740,12 @@ gst_video_format_new_caps_raw_strided (GstVideoFormat format, int rowstride)
       g_assert_not_reached ();
     }
 
-    caps = gst_caps_new_simple (rowstride ?
-        "video/x-raw-rgb-strided" : "video/x-raw-rgb",
-        "bpp", G_TYPE_INT, bpp, "depth", G_TYPE_INT, depth, NULL);
+    s = gst_structure_new (rowstride ? "video/x-raw-rgb-strided" :
+        "video/x-raw-rgb", "bpp", G_TYPE_INT, bpp, "depth", G_TYPE_INT, depth,
+        NULL);
 
     if (bpp != 8) {
-      gst_caps_set_simple (caps,
+      gst_structure_set (s,
           "endianness", G_TYPE_INT, G_BIG_ENDIAN,
           "red_mask", G_TYPE_INT, red_mask,
           "green_mask", G_TYPE_INT, green_mask,
@@ -736,9 +753,12 @@ gst_video_format_new_caps_raw_strided (GstVideoFormat format, int rowstride)
     }
 
     if (have_alpha) {
+      /* note: we are passing a bogus width/height to get_component_offset(),
+       * but those parameters are ignored for the packed formats so it is ok
+       */
       alpha_mask =
           mask >> (8 * gst_video_format_get_component_offset (format, 3, 0, 0));
-      gst_caps_set_simple (caps, "alpha_mask", G_TYPE_INT, alpha_mask, NULL);
+      gst_structure_set (s, "alpha_mask", G_TYPE_INT, alpha_mask, NULL);
     }
   } else if (gst_video_format_is_gray (format)) {
     int bpp;
@@ -764,23 +784,61 @@ gst_video_format_new_caps_raw_strided (GstVideoFormat format, int rowstride)
     }
 
     if (bpp <= 8) {
-      caps = gst_caps_new_simple ("video/x-raw-gray",
-          "bpp", G_TYPE_INT, bpp, "depth", G_TYPE_INT, depth, NULL);
+      s = gst_structure_new (rowstride ? "video/x-raw-gray-strided" :
+          "video/x-raw-gray", "bpp", G_TYPE_INT, bpp, "depth",
+          G_TYPE_INT, depth, NULL);
     } else {
-      caps = gst_caps_new_simple ("video/x-raw-gray",
-          "bpp", G_TYPE_INT, bpp,
-          "depth", G_TYPE_INT, depth,
-          "endianness", G_TYPE_INT, endianness, NULL);
+      s = gst_structure_new (rowstride ? "video/x-raw-gray-strided" :
+          "video/x-raw-gray", "bpp", G_TYPE_INT, bpp, "depth",
+          G_TYPE_INT, depth, "endianness", G_TYPE_INT, endianness, NULL);
     }
   } else {
     return NULL;
   }
 
-  if (rowstride) {
-    gst_caps_set_simple (caps, "rowstride", G_TYPE_INT, rowstride, NULL);
+  if (rowstride > 0) {
+    gst_structure_set (s, "rowstride", G_TYPE_INT, rowstride, NULL);
+  } else if (rowstride < 0) {
+    gst_structure_set (s, "rowstride", GST_TYPE_INT_RANGE, 1, G_MAXINT, NULL);
   }
 
-  return caps;
+  va_start (varargs, fieldname);
+  gst_structure_set_valist (s, fieldname, varargs);
+  va_end (varargs);
+
+  return gst_caps_new_full (s, NULL);
+}
+
+/**
+ * gst_video_format_new_caps_strided:
+ * @format: the #GstVideoFormat describing the raw video format
+ * @width: width of video
+ * @height: height of video
+ * @rowstride: the rowstride (in bytes), or 0 if no rowstride
+ * @framerate_n: numerator of frame rate
+ * @framerate_d: denominator of frame rate
+ * @par_n: numerator of pixel aspect ratio
+ * @par_d: denominator of pixel aspect ratio
+ *
+ * Creates a new #GstCaps object based on the parameters provided.
+ *
+ * Since: ???
+ *
+ * Returns: a new #GstCaps object, or NULL if there was an error
+ */
+GstCaps *
+gst_video_format_new_caps_strided (GstVideoFormat format,
+    int width, int height, int rowstride,
+    int framerate_n, int framerate_d, int par_n, int par_d)
+{
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
+
+  return gst_video_format_new_caps_simple (format, rowstride,
+      "width", G_TYPE_INT, width,
+      "height", G_TYPE_INT, height,
+      "framerate", GST_TYPE_FRACTION, framerate_n, framerate_d,
+      "pixel-aspect-ratio", GST_TYPE_FRACTION, par_n, par_d,
+      NULL);
 }
 
 /**
@@ -827,7 +885,7 @@ gst_video_format_new_template_caps (GstVideoFormat format)
 
   g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, NULL);
 
-  caps = gst_video_format_new_caps_raw_strided (format, 0);
+  caps = gst_video_format_new_caps_simple (format, 0, NULL);
   if (caps) {
     GValue value = { 0 };
     GValue v = { 0 };
@@ -849,48 +907,6 @@ gst_video_format_new_template_caps (GstVideoFormat format)
     g_value_unset (&v);
 
     gst_structure_take_value (structure, "interlaced", &value);
-  }
-
-  return caps;
-}
-
-/**
- * gst_video_format_new_caps_strided:
- * @format: the #GstVideoFormat describing the raw video format
- * @width: width of video
- * @height: height of video
- * @rowstride: the rowstride (in bytes), or 0 if no rowstride
- * @framerate_n: numerator of frame rate
- * @framerate_d: denominator of frame rate
- * @par_n: numerator of pixel aspect ratio
- * @par_d: denominator of pixel aspect ratio
- *
- * Creates a new #GstCaps object based on the parameters provided.
- *
- * Since: ???
- *
- * Returns: a new #GstCaps object, or NULL if there was an error
- */
-GstCaps *
-gst_video_format_new_caps_strided (GstVideoFormat format,
-    int width, int height, int rowstride,
-    int framerate_n, int framerate_d, int par_n, int par_d)
-{
-  GstCaps *caps;
-  GstStructure *structure;
-
-  g_return_val_if_fail (format != GST_VIDEO_FORMAT_UNKNOWN, NULL);
-  g_return_val_if_fail (width > 0 && height > 0, NULL);
-
-  caps = gst_video_format_new_caps_raw_strided (format, rowstride);
-  if (caps) {
-    structure = gst_caps_get_structure (caps, 0);
-
-    gst_structure_set (structure,
-        "width", G_TYPE_INT, width,
-        "height", G_TYPE_INT, height,
-        "framerate", GST_TYPE_FRACTION, framerate_n, framerate_d,
-        "pixel-aspect-ratio", GST_TYPE_FRACTION, par_n, par_d, NULL);
   }
 
   return caps;

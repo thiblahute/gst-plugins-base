@@ -507,6 +507,8 @@ GstCaps *      gst_video_format_new_template_caps (GstVideoFormat format);
 GstCaps * gst_video_format_new_caps_strided (GstVideoFormat format,
     int width, int height, int rowstride,
     int framerate_n, int framerate_d, int par_n, int par_d);
+GstCaps * gst_video_format_new_caps_simple (GstVideoFormat format,
+    int rowstride, const char *fieldname, ...);
 
 /* format properties */
 

@@ -2149,6 +2149,23 @@ GST_TYPE_VIDEO_FORMAT
 </SECTION>
 
 <SECTION>
+<FILE>gstmpegvideoparser</FILE>
+<INCLUDE>gst/video/gstmpegvideoparser.h</INCLUDE>
+GstMpegVideoPacketTypeCode
+GstMpegVideoPacketExtensionCode
+GstMpegVideoPictureType
+GstMpegVideoParams
+GstMpegVideoPictureHdr
+GstMpegVideoGop
+GstMpegVideoPictureExt
+gst_mpeg_video_parse_gop
+gst_mpeg_video_parse_params
+gst_mpeg_video_parse_picture_header
+gst_mpeg_video_parse_picture_extension
+<SUBSECTION Standard>
+</SECTION>
+
+<SECTION>
 <FILE>gstvideofilter</FILE>
 <INCLUDE>gst/video/gstvideofilter.h</INCLUDE>
 GstVideoFilter

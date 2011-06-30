@@ -412,16 +412,16 @@ serialize_stream_profiles (GKeyFile * out, GstEncodingProfile * sprof,
 static gchar *
 get_locale (void)
 {
-  const char *loc = NULL;
+  const char *locale = NULL;
   gchar *ret;
 
 #ifdef ENABLE_NLS
 #if defined(LC_MESSAGES)
-  loc = setlocale (LC_MESSAGES, NULL);
-  GST_LOG ("LC_MESSAGES: %s", GST_STR_NULL (loc));
+  locale = setlocale (LC_MESSAGES, NULL);
+  GST_LOG ("LC_MESSAGES: %s", GST_STR_NULL (locale));
 #elif defined(LC_ALL)
-  loc = setlocale (LC_ALL, NULL);
-  GST_LOG ("LC_ALL: %s", GST_STR_NULL (loc));
+  locale = setlocale (LC_ALL, NULL);
+  GST_LOG ("LC_ALL: %s", GST_STR_NULL (locale));
 #else
   GST_LOG ("Neither LC_ALL nor LC_MESSAGES defined");
 #endif
@@ -429,11 +429,11 @@ get_locale (void)
   GST_LOG ("i18n disabled");
 #endif
 
-  if (loc == NULL || g_ascii_strncasecmp (loc, "en", 2) == 0)
+  if (locale == NULL || g_ascii_strncasecmp (locale, "en", 2) == 0)
     return NULL;
 
   /* en_GB.UTF-8 => en */
-  ret = g_ascii_strdown (loc, -1);
+  ret = g_ascii_strdown (locale, -1);
   ret = g_strcanon (ret, "abcdefghijklmnopqrstuvwxyz", '\0');
   GST_LOG ("using locale: %s", ret);
   return ret;

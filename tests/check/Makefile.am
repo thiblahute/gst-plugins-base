@@ -153,6 +153,7 @@ check_PROGRAMS = \
 	libs/tag \
 	libs/video \
 	libs/xmpwriter \
+	libs/videoparsers \
 	$(cxx_checks) \
 	$(check_orc) \
 	pipelines/simple-launch-lines \
@@ -314,6 +315,12 @@ libs_profile_CFLAGS = \
 	$(AM_CFLAGS)
 libs_profile_LDADD = \
 	$(top_builddir)/gst-libs/gst/pbutils/libgstpbutils-@GST_MAJORMINOR@.la $(LDADD)
+
+libs_videoparsers_CFLAGS = \
+	$(GST_PLUGINS_BASE_CFLAGS) \
+	$(AM_CFLAGS)
+libs_videoparsers_LDADD = \
+	$(top_builddir)/gst-libs/gst/video/libgstvideo-@GST_MAJORMINOR@.la $(LDADD)
 
 libs_xmpwriter_CFLAGS = \
 	$(GST_PLUGINS_BASE_CFLAGS) \

@@ -93,7 +93,7 @@ typedef struct _GstMpegVideoSequenceExtension GstMpegVideoSequenceExtension;
 typedef struct _GstMpegVideoPictureHdr GstMpegVideoPictureHdr;
 typedef struct _GstMpegVideoGop GstMpegVideoGop;
 typedef struct _GstMpegVideoPictureExt GstMpegVideoPictureExt;
-
+typedef struct _GstMpegVideoTypeOffsetSize GstMpegVideoTypeOffsetSize;
 /**
  * GstMpegVideoSequenceHdr:
  * @width: Width of each frame
@@ -248,6 +248,22 @@ struct _GstMpegVideoGop
   guint8 broken_gop;
 };
 
+/**
+ * GstMpegVideoTypeOffsetSize:
+ * @type: the type of the packet that start at @offset
+ * @offset: the offset of the packet start in bytes, it is the exact, start of the packet, no sync code included
+ * @size: The size in bytes of the packet or -1 if the end wasn't found. It is the exact size of the packet, no sync code included
+ *
+ * A structure that contains the type of a packet, its offset and its size
+ */
+struct _GstMpegVideoTypeOffsetSize
+{
+  guint8 type;
+  guint offset;
+  gint size;
+};
+
+GList * gst_mpeg_video_parse (guint8 * data, gsize size, guint offset);
 gboolean gst_mpeg_video_parse_sequence_header    (GstMpegVideoSequenceHdr * params,
     guint8 * data, gsize size, guint offset);
 gboolean gst_mpeg_video_parse_picture_header     (GstMpegVideoPictureHdr* hdr,

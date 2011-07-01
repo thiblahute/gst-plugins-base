@@ -2158,6 +2158,8 @@ GstMpegVideoParams
 GstMpegVideoPictureHdr
 GstMpegVideoGop
 GstMpegVideoPictureExt
+GstMpegVideoTypeOffsetSize
+gst_mpeg_video_parse
 gst_mpeg_video_parse_gop
 gst_mpeg_video_parse_params
 gst_mpeg_video_parse_picture_header

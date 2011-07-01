@@ -251,7 +251,112 @@ failed:
   }
 }
 
+static inline guint
+scan_for_start_codes (const GstByteReader * reader, guint offset, guint size)
+{
+  const guint8 *data;
+  guint32 state;
+  guint i;
+
+  g_return_val_if_fail (size > 0, -1);
+  g_return_val_if_fail ((guint64) offset + size <= reader->size - reader->byte,
+      -1);
+
+  /* we can't find the pattern with less than 4 bytes */
+  if (G_UNLIKELY (size < 4))
+    return -1;
+
+  data = reader->data + reader->byte + offset;
+
+  /* set the state to something that does not match */
+  state = 0xffffffff;
+
+  /* now find data */
+  for (i = 0; i < size; i++) {
+    /* throw away one byte and move in the next byte */
+    state = ((state << 8) | data[i]);
+    if (G_UNLIKELY ((state & 0xffffff00) == 0x00000100)) {
+      /* we have a match but we need to have skipped at
+       * least 4 bytes to fill the state. */
+      if (G_LIKELY (i >= 3))
+        return offset + i - 3;
+    }
+
+    /* Accelerate search for start code */
+    if (data[i] > 1) {
+      while (i < (size - 4) && data[i] > 1) {
+        if (data[i + 3] > 1)
+          i += 4;
+        else
+          i += 1;
+      }
+      state = 0x00000100;
+    }
+  }
+
+  /* nothing found */
+  return -1;
+}
+
 /****** API *******/
+
+/**
+ * gst_mpeg_video_parse:
+ * @data: The datas from which to parse
+ * @size: The size of @data
+ * @offset: The offset from which to start the parsing
+ *
+ * Parses @data, and detects the different packets types, offset,
+ * and size, starting from @offset
+ *
+ * Returns: a #GList of #GstMpegVideoTypeOffsetSize
+ */
+GList *
+gst_mpeg_video_parse (guint8 * data, gsize size, guint offset)
+{
+  gint off, rsize;
+  GstByteReader br;
+  GList *ret = NULL;
+  size = size - offset;
+
+  if (size <= 0) {
+    GST_DEBUG ("Can't parse from offset %d, buffer is to small", offset);
+    return NULL;
+  }
+
+  gst_byte_reader_init (&br, &data[offset], size);
+
+  off = scan_for_start_codes (&br, 0, size);
+
+  if (off < 0) {
+    GST_DEBUG ("No start code prefix in this buffer");
+    return NULL;
+  }
+
+  while (off >= 0 && off + 3 < size) {
+    GstMpegVideoTypeOffsetSize *codoffsize;
+
+    gst_byte_reader_skip (&br, off + 3);
+
+    codoffsize = g_malloc (sizeof (GstMpegVideoTypeOffsetSize));
+    gst_byte_reader_get_uint8 (&br, &codoffsize->type);
+
+    codoffsize->offset = gst_byte_reader_get_pos (&br) + offset;
+
+    rsize = gst_byte_reader_get_remaining (&br);
+    if (rsize <= 0)
+      break;
+
+    off = scan_for_start_codes (&br, 0, rsize);
+
+    codoffsize->size = off;
+
+    ret = g_list_prepend (ret, codoffsize);
+    codoffsize = ret->data;
+  }
+
+  return g_list_reverse (ret);
+}
 
 /**
  * gst_mpeg_video_parse_sequence_header:

@@ -227,7 +227,7 @@ struct _StreamGroup
 #define DEFAULT_QUEUE_TIME_MAX     GST_SECOND
 #define DEFAULT_AUDIO_JITTER_TOLERANCE 20 * GST_MSECOND
 #define DEFAULT_AVOID_REENCODING   FALSE
-#define DEFAULT_FLAGS              0
+#define DEFAULT_FLAGS              GST_ENC_FLAG_NO_VIDEO_CONVERSION
 
 #define DEFAULT_RAW_CAPS			\
   "video/x-raw-yuv; "				\

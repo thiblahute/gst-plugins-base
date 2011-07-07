@@ -786,6 +786,7 @@ _get_parser (GstEncodeBin * ebin, GstEncodingProfile * sprof)
 
   format = gst_encoding_profile_get_format (sprof);
 
+
   GST_DEBUG ("Getting list of parsers for format %" GST_PTR_FORMAT, format);
 
   /* FIXME : requesting twice the parsers twice is a bit ugly, we should
@@ -809,7 +810,8 @@ _get_parser (GstEncodeBin * ebin, GstEncodingProfile * sprof)
     break;
   }
 
-  if (parserfact)
+  if (parserfact
+      && !strcmp (((GstPluginFeature *) parserfact)->name, "h264parse"))
     parser = gst_element_factory_create (parserfact, NULL);
 
   gst_plugin_feature_list_free (parsers);

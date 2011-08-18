@@ -479,6 +479,32 @@ gst_stride_transform_transform_caps (GstBaseTransform * base,
 
   gst_caps_do_simplify (ret);
 
+  /* do_simplify sorts caps in a way that yuv always comes before yuv-strided.
+   * If we're converting from yuv-strided we want to favor yuv-strided though,
+   * so we reverse the result.
+   */
+  if (!gst_caps_is_empty (caps)) {
+    GstCaps *tmp;
+    GstStructure *s;
+    const char *name;
+
+    s = gst_caps_get_structure (caps, 0);
+    name = gst_structure_get_name (s);
+
+    if (!strcmp (name, "video/x-raw-yuv-strided") ||
+          !strcmp (name, "video/x-raw-rgb-strided")) {
+      tmp = gst_caps_new_empty ();
+      
+      for (int i = gst_caps_get_size (ret) - 1; i >= 0; i--) {
+        gst_caps_append_structure (tmp,
+            gst_structure_copy (gst_caps_get_structure (ret, i)));
+      }
+
+      gst_caps_unref (ret);
+      ret = tmp;
+    }
+  }
+
   LOG_CAPS (self, ret);
 
   return ret;

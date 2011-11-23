@@ -429,6 +429,8 @@ gst_video_format_parse_caps (const GstCaps * caps, GstVideoFormat * format,
       } else {
         ok = FALSE;
       }
+    } else if (g_str_has_prefix (gst_structure_get_name (structure), "video")) {
+      *format = GST_VIDEO_FORMAT_UNKNOWN;
     } else {
       ok = FALSE;
     }

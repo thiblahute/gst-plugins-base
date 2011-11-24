@@ -111,6 +111,7 @@ enum
   SIGNAL_NEW_PREROLL,
   SIGNAL_NEW_BUFFER,
   SIGNAL_NEW_BUFFER_LIST,
+  SIGNAL_CROP,
 
   /* actions */
   SIGNAL_PULL_PREROLL,
@@ -345,6 +346,35 @@ gst_app_sink_class_init (GstAppSinkClass * klass)
       g_signal_new ("new-buffer-list", G_TYPE_FROM_CLASS (klass),
       G_SIGNAL_RUN_LAST, G_STRUCT_OFFSET (GstAppSinkClass, new_buffer_list),
       NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0, G_TYPE_NONE);
+  /**
+   * GstAppSink::crop:
+   * @appsink: the appsink element that emited the signal
+   * @top: coordinate of top row of pixels
+   * @left: coordinate of left column of pixels
+   * @width: width of visible picture (starting from %left)
+   * @height: height of visible picture (starting from %top)
+   *
+   * Signal new picture cropping (applicable for YUV/RGB buffers).  Note
+   * that for gst 0.11, this information should come from the buffer as
+   * meta-data, to make it easier to synchronize cropping coordinates
+   * with buffers.  For now, you can probably ignore that because for
+   * decoders cropping won't be changing on a per-frame basis.  In case
+   * you do need to care about synchronizing with buffers, you probably
+   * need to count the new-buffer signals and keep a queue of cropping
+   * coordinates to match up with buffers when you pop them.  Or just
+   * wait for 0.11.
+   *
+   * This signal is emited from the steaming thread and only when the
+   * "emit-signals" property is %TRUE.
+   *
+   * Note that this signal is only emited when the "emit-signals" property is
+   * set to %TRUE, which it is not by default for performance reasons.
+   */
+  gst_app_sink_signals[SIGNAL_CROP] =
+      g_signal_new ("crop", G_TYPE_FROM_CLASS (klass),
+      G_SIGNAL_RUN_LAST, G_STRUCT_OFFSET (GstAppSinkClass, crop),
+      NULL, NULL, g_cclosure_marshal_generic, G_TYPE_NONE, 4,
+      G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT);
 
   /**
    * GstAppSink::pull-preroll:
@@ -692,6 +722,13 @@ gst_app_sink_event (GstBaseSink * sink, GstEvent * event)
       gst_app_sink_flush_unlocked (appsink);
       g_mutex_unlock (priv->mutex);
       break;
+    case GST_EVENT_CROP:{
+      gint top, left, width, height;
+      gst_event_parse_crop (event, &top, &left, &width, &height);
+      g_signal_emit (appsink, gst_app_sink_signals[SIGNAL_CROP], 0, top, left,
+          width, height);
+      break;
+    }
     default:
       break;
   }

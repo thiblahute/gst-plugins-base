@@ -105,9 +105,10 @@ struct _GstAppSinkClass
   /* ABI added */
   GstBufferList * (*new_buffer_list)   (GstAppSink *sink);
   GstBufferList * (*pull_buffer_list)  (GstAppSink *sink);
+  GstBufferList * (*crop)              (GstAppSink *sink, gint top, gint left, gint width, gint height);
 
   /*< private >*/
-  gpointer     _gst_reserved[GST_PADDING - 2];
+  gpointer     _gst_reserved[GST_PADDING - 3];
 };
 
 GType gst_app_sink_get_type(void);

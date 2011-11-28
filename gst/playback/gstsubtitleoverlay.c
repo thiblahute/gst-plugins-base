@@ -901,6 +901,7 @@ _pad_blocked_cb (GstPad * pad, gboolean blocked, gpointer user_data)
 
     element = is_renderer ? self->renderer : self->parser;
 
+    is_video = _is_video_pad (self->video_sinkpad, &is_hw);
     /* If this is a parser, create textoverlay and link video and the parser to it
      * Else link the renderer to the output colorspace */
     if (!is_renderer) {
@@ -980,7 +981,6 @@ _pad_blocked_cb (GstPad * pad, gboolean blocked, gpointer user_data)
 
       /* If we are working with video/x-surface, we do not add
        * colorspace conversion elements */
-      is_video = _is_video_pad (self->video_sinkpad, &is_hw);
       if (is_video && !is_hw) {
         if (G_UNLIKELY (!_create_element (self, &self->post_colorspace,
                     COLORSPACE, NULL, "post-colorspace", FALSE))) {

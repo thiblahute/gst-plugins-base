@@ -1677,9 +1677,27 @@ gst_text_overlay_push_frame (GstTextOverlay * overlay, GstBuffer * video_frame)
 
   if (overlay->composition) {
     if (overlay->attach_compo_to_buffer) {
-      GST_DEBUG_OBJECT (overlay, "Attaching text to the buffer");
-      gst_video_buffer_set_overlay_composition (video_frame,
-          overlay->composition);
+      GstVideoOverlayComposition *cur_comp;
+
+      cur_comp = gst_video_buffer_get_overlay_composition (video_frame);
+      if (cur_comp) {
+        GstVideoOverlayComposition *writable_comp;
+        GstVideoOverlayRectangle *rect;
+
+        /* We know that there is only 1 rectangle in the composition */
+        rect =
+            gst_video_overlay_composition_get_rectangle (overlay->composition,
+            0);
+        writable_comp = gst_video_overlay_composition_make_writable (cur_comp);
+        gst_video_overlay_composition_add_rectangle (writable_comp, rect);
+        gst_video_buffer_set_overlay_composition (video_frame, writable_comp);
+
+        gst_video_overlay_composition_unref (cur_comp);
+      } else {
+
+        gst_video_buffer_set_overlay_composition (video_frame,
+            overlay->composition);
+      }
     } else {
       gst_video_overlay_composition_blend (overlay->composition, video_frame);
     }

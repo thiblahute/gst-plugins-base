@@ -234,7 +234,7 @@ enum
 
 /* whan playing, keep a max of 2MB of data but try to keep the number of buffers
  * as low as possible (try to aim for 5 buffers) */
-#define AUTO_PLAY_SIZE_BYTES        2 * 1024 * 1024
+#define AUTO_PLAY_SIZE_BYTES        5 * 1024 * 1024
 #define AUTO_PLAY_SIZE_BUFFERS      5
 #define AUTO_PLAY_SIZE_TIME         0
 

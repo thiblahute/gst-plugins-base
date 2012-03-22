@@ -533,6 +533,10 @@ gst_stride_transform_set_caps (GstBaseTransform * base,
           &out_format, &width, &height, &self->out_rowstride), FALSE);
 
   self->conversion = NULL;
+  self->crop_width = 0;
+  self->crop_height = 0;
+  self->crop_left = 0;
+  self->crop_top = 0;
 
   for (i = 0; stride_conversions[i].format[0] != GST_VIDEO_FORMAT_UNKNOWN; i++) {
     if ((stride_conversions[i].format[0] == in_format) &&

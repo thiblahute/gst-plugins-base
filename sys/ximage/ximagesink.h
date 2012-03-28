@@ -221,6 +221,9 @@ struct _GstXImageSink
 
   /* stream metadata */
   gchar *media_title;
+
+  /* Crop */
+  GstVideoRectangle crop;
 };
 
 struct _GstXImageSinkClass

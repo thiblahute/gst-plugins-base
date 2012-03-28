@@ -106,6 +106,7 @@
 /* Our interfaces */
 #include <gst/interfaces/navigation.h>
 #include <gst/interfaces/xoverlay.h>
+#include <gst/video/video.h>
 
 /* Object header */
 #include "ximagesink.h"
@@ -683,6 +684,7 @@ gst_ximagesink_ximage_put (GstXImageSink * ximagesink, GstXImageBuffer * ximage)
 {
   GstVideoRectangle src, dst, result;
   gboolean draw_border = FALSE;
+  GstVideoRectangle *crop = &ximagesink->crop;
 
   g_return_val_if_fail (GST_IS_XIMAGESINK (ximagesink), FALSE);
 
@@ -723,10 +725,17 @@ gst_ximagesink_ximage_put (GstXImageSink * ximagesink, GstXImageBuffer * ximage)
     }
   }
 
-  src.w = ximage->width;
-  src.h = ximage->height;
-  dst.w = ximagesink->xwindow->width;
-  dst.h = ximagesink->xwindow->height;
+  if (crop->x || crop->y || crop->w || crop->h) {
+    src.w = crop->w;
+    src.h = crop->h;
+    dst.w = ximagesink->xwindow->width;
+    dst.h = ximagesink->xwindow->height;
+  } else {
+    src.w = ximage->width;
+    src.h = ximage->height;
+    dst.w = ximagesink->xwindow->width;
+    dst.h = ximagesink->xwindow->height;
+  }
 
   gst_video_sink_center_rect (src, dst, &result, FALSE);
 
@@ -744,8 +753,8 @@ gst_ximagesink_ximage_put (GstXImageSink * ximagesink, GstXImageBuffer * ximage)
         ximage, 0, 0, result.x, result.y, result.w, result.h,
         ximagesink->xwindow->width, ximagesink->xwindow->height);
     XShmPutImage (ximagesink->xcontext->disp, ximagesink->xwindow->win,
-        ximagesink->xwindow->gc, ximage->ximage, 0, 0, result.x, result.y,
-        result.w, result.h, FALSE);
+        ximagesink->xwindow->gc, ximage->ximage, crop->x, crop->y,
+        result.x, result.y, result.w, result.h, FALSE);
   } else
 #endif /* HAVE_XSHM */
   {
@@ -754,8 +763,8 @@ gst_ximagesink_ximage_put (GstXImageSink * ximagesink, GstXImageBuffer * ximage)
         ximage, 0, 0, result.x, result.y, result.w, result.h,
         ximagesink->xwindow->width, ximagesink->xwindow->height);
     XPutImage (ximagesink->xcontext->disp, ximagesink->xwindow->win,
-        ximagesink->xwindow->gc, ximage->ximage, 0, 0, result.x, result.y,
-        result.w, result.h);
+        ximagesink->xwindow->gc, ximage->ximage, crop->x, crop->y,
+        result.x, result.y, result.w, result.h);
   }
 
   XSync (ximagesink->xcontext->disp, FALSE);
@@ -1258,6 +1267,51 @@ gst_ximagesink_calculate_pixel_aspect_ratio (GstXContext * xcontext)
       gst_value_get_fraction_denominator (xcontext->par));
 }
 
+static gboolean
+gst_ximagesink_configure_overlay (GstXImageSink * ximagesink, gint width,
+    gint height, gint video_par_n, gint video_par_d)
+{
+  guint calculated_par_n;
+  guint calculated_par_d;
+
+  if (!gst_video_calculate_display_ratio (&calculated_par_n, &calculated_par_d,
+          width, height, video_par_n, video_par_d, 1, 1)) {
+    GST_ELEMENT_ERROR (ximagesink, CORE, NEGOTIATION, (NULL),
+        ("Error calculating the output display ratio of the video."));
+    return FALSE;
+  }
+  GST_DEBUG_OBJECT (ximagesink,
+      "video width/height: %dx%d, calculated display ratio: %d/%d",
+      width, height, calculated_par_n, calculated_par_d);
+
+  /* now find a width x height that respects this display ratio.
+   * prefer those that have one of w/h the same as the incoming video
+   * using wd / hd = calculated_pad_n / calculated_par_d */
+
+  /* start with same height, because of interlaced video */
+  /* check hd / calculated_par_d is an integer scale factor, and scale wd with the PAR */
+  if (height % calculated_par_d == 0) {
+    GST_DEBUG_OBJECT (ximagesink, "keeping video height");
+    GST_VIDEO_SINK_WIDTH (ximagesink) = (guint)
+        gst_util_uint64_scale_int (height, calculated_par_n, calculated_par_d);
+    GST_VIDEO_SINK_HEIGHT (ximagesink) = height;
+  } else if (width % calculated_par_n == 0) {
+    GST_DEBUG_OBJECT (ximagesink, "keeping video width");
+    GST_VIDEO_SINK_WIDTH (ximagesink) = width;
+    GST_VIDEO_SINK_HEIGHT (ximagesink) = (guint)
+        gst_util_uint64_scale_int (width, calculated_par_d, calculated_par_n);
+  } else {
+    GST_DEBUG_OBJECT (ximagesink, "approximating while keeping video height");
+    GST_VIDEO_SINK_WIDTH (ximagesink) = (guint)
+        gst_util_uint64_scale_int (height, calculated_par_n, calculated_par_d);
+    GST_VIDEO_SINK_HEIGHT (ximagesink) = height;
+  }
+  GST_DEBUG_OBJECT (ximagesink, "scaling to %dx%d",
+      GST_VIDEO_SINK_WIDTH (ximagesink), GST_VIDEO_SINK_HEIGHT (ximagesink));
+
+  return TRUE;
+}
+
 /* This function gets the X Display and global info about it. Everything is
    stored in our object and will be cleaned when the object is disposed. Note
    here that caps for supported format are generated without any window or
@@ -1756,6 +1810,38 @@ gst_ximagesink_event (GstBaseSink * sink, GstEvent * event)
 
         g_free (title);
       }
+      break;
+    }
+    case GST_EVENT_CROP:{
+      gint left, top, width, height;
+      GstStructure *structure;
+      GstMessage *message;
+      GstVideoRectangle *c = &ximagesink->crop;
+
+      gst_event_parse_crop (event, &top, &left, &width, &height);
+
+      c->y = top;
+      c->x = left;
+
+      if (width == -1)
+        width = GST_VIDEO_SINK_WIDTH (ximagesink);
+      if (height == -1)
+        height = GST_VIDEO_SINK_HEIGHT (ximagesink);
+
+      c->w = width;
+      c->h = height;
+
+      structure = gst_structure_new ("video-size-crop", "width", G_TYPE_INT,
+          width, "height", G_TYPE_INT, height, NULL);
+      message =
+          gst_message_new_application (GST_OBJECT (ximagesink), structure);
+      gst_bus_post (gst_element_get_bus (GST_ELEMENT (ximagesink)), message);
+
+      if (!gst_ximagesink_configure_overlay (ximagesink, width, height,
+              gst_value_get_fraction_numerator (ximagesink->par),
+              gst_value_get_fraction_denominator (ximagesink->par)))
+        return FALSE;
+
       break;
     }
     default:
@@ -2299,6 +2385,11 @@ gst_ximagesink_reset (GstXImageSink * ximagesink)
 
   gst_ximagesink_bufferpool_clear (ximagesink);
 
+  ximagesink->crop.x = 0;
+  ximagesink->crop.y = 0;
+  ximagesink->crop.w = 0;
+  ximagesink->crop.h = 0;
+
   g_mutex_lock (ximagesink->flow_lock);
   if (ximagesink->xwindow) {
     gst_ximagesink_xwindow_clear (ximagesink, ximagesink->xwindow);
@@ -2372,6 +2463,11 @@ gst_ximagesink_init (GstXImageSink * ximagesink)
   ximagesink->keep_aspect = FALSE;
   ximagesink->handle_events = TRUE;
   ximagesink->handle_expose = TRUE;
+
+  ximagesink->crop.x = 0;
+  ximagesink->crop.y = 0;
+  ximagesink->crop.w = 0;
+  ximagesink->crop.h = 0;
 }
 
 static void

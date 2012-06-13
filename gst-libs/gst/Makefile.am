@@ -13,6 +13,7 @@ SUBDIRS = \
 	sdp \
 	rtsp \
 	video \
+	dmabuf \
 	pbutils \
 	audio \
 	riff \

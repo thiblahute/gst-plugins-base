@@ -980,6 +980,7 @@ gst-libs/gst/tag/Makefile
 gst-libs/gst/pbutils/Makefile
 gst-libs/gst/pbutils/gstpluginsbaseversion.h
 gst-libs/gst/video/Makefile
+gst-libs/gst/dmabuf/Makefile
 tools/Makefile
 pkgconfig/Makefile
 pkgconfig/gstreamer-audio.pc
@@ -988,6 +989,8 @@ pkgconfig/gstreamer-app.pc
 pkgconfig/gstreamer-app-uninstalled.pc
 pkgconfig/gstreamer-cdda.pc
 pkgconfig/gstreamer-cdda-uninstalled.pc
+pkgconfig/gstreamer-dmabuf.pc
+pkgconfig/gstreamer-dmabuf-uninstalled.pc
 pkgconfig/gstreamer-fft.pc
 pkgconfig/gstreamer-fft-uninstalled.pc
 pkgconfig/gstreamer-floatcast.pc

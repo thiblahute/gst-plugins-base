@@ -525,14 +525,24 @@ gst_stride_transform_set_caps (GstBaseTransform * base,
   gint width, height;
   GstVideoFormat in_format, out_format;
   gint i;
+  gboolean ok;
 
   LOG_CAPS (self, incaps);
   LOG_CAPS (self, outcaps);
 
-  g_return_val_if_fail (gst_video_format_parse_caps_strided (incaps,
-          &in_format, &self->width, &self->height, &self->in_rowstride), FALSE);
-  g_return_val_if_fail (gst_video_format_parse_caps_strided (outcaps,
-          &out_format, &width, &height, &self->out_rowstride), FALSE);
+  ok = gst_video_format_parse_caps_strided (incaps,
+      &in_format, &self->width, &self->height, &self->in_rowstride);
+  g_return_val_if_fail (ok, FALSE);
+  ok = gst_video_format_parse_caps_strided (outcaps,
+      &out_format, &width, &height, &self->out_rowstride);
+  g_return_val_if_fail (ok, FALSE);
+
+  /* Ensure we round up to match what GStreamer expects when no stride
+     is given */
+  if (self->in_rowstride == 0)
+    self->in_rowstride = GST_ROUND_UP_4 (self->width);
+  if (self->out_rowstride == 0)
+    self->out_rowstride = GST_ROUND_UP_4 (width);
 
   self->conversion = NULL;
   self->crop_width = 0;

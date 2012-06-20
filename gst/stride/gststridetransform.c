@@ -143,6 +143,8 @@ gst_stride_transform_dispose (GObject * object)
 {
   GstStrideTransform *self = GST_STRIDE_TRANSFORM (object);
   GST_DEBUG_OBJECT (self, "ENTER");
+  gst_caps_replace (&self->cached_caps[0], NULL);
+  gst_caps_replace (&self->cached_caps[1], NULL);
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 

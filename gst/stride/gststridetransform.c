@@ -187,9 +187,11 @@ gst_stride_transform_get_unit_size (GstBaseTransform * base,
   GstStrideTransform *self = GST_STRIDE_TRANSFORM (base);
   GstVideoFormat format;
   gint width, height, rowstride;
+  gboolean ok;
 
-  g_return_val_if_fail (gst_video_format_parse_caps_strided (caps, &format,
-          &width, &height, &rowstride), FALSE);
+  ok = gst_video_format_parse_caps_strided (caps, &format,
+      &width, &height, &rowstride);
+  g_return_val_if_fail (ok, FALSE);
 
   *size = gst_video_format_get_size_strided (format, width, height, rowstride);
 

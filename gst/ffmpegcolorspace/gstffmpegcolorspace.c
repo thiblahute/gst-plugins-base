@@ -475,6 +475,9 @@ gst_ffmpegcsp_transform (GstBaseTransform * btrans, GstBuffer * inbuf,
           space->to_pixfmt == PIX_FMT_NB))
     goto unknown_format;
 
+  /* Ensure any crop setting is preserved */
+  gst_buffer_copy_metadata (outbuf, inbuf, GST_BUFFER_COPY_QDATA);
+
   /* fill from with source data */
   gst_ffmpegcsp_avpicture_fill (&space->from_frame,
       GST_BUFFER_DATA (inbuf), space->from_pixfmt, space->width, space->height,

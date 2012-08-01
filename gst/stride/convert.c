@@ -195,7 +195,9 @@ static inline gboolean refresh_cache(GstStrideTransform * self,
 
     if ((cache->in_bpl < (self->width * bpp)) ||
         (cache->out_bpl < (self->width * bpp))) {
-      GST_ERROR_OBJECT (self, "invalid stride parameter");
+      GST_ERROR_OBJECT (self,
+          "invalid stride parameter (in_bpl %d, out_bpl %d, width %d, bpp %d",
+          cache->in_bpl, cache->out_bpl, self->width, bpp);
       return GST_FLOW_ERROR;
     }
 

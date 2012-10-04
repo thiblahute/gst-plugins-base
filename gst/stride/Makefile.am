@@ -1,10 +1,18 @@
 plugin_LTLIBRARIES = libgststridetransform.la
 
+ARM_FILES=armv7.s
+
+if HAVE_CPU_ARM
+ARCH_FILES = $(ARM_FILES)
+else
+ARCH_FILES =
+endif
+
 libgststridetransform_la_SOURCES = \
 	gststridetransform.c \
 	convert.c \
-	armv7.s \
-	plugin.c
+	plugin.c \
+	$(ARCH_FILES)
 
 libgststridetransform_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_BASE_CFLAGS) $(GST_CFLAGS)
 libgststridetransform_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)

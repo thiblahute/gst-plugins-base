@@ -699,6 +699,11 @@ gst_text_overlay_init (GstTextOverlay * overlay, GstTextOverlayClass * klass)
   overlay->fps_n = 0;
   overlay->fps_d = 1;
 
+  overlay->crop_top = 0;
+  overlay->crop_left = 0;
+  overlay->crop_width = 0;
+  overlay->crop_height = 0;
+
   overlay->text_buffer = NULL;
   overlay->text_linked = FALSE;
   overlay->cond = g_cond_new ();
@@ -798,6 +803,17 @@ gst_text_overlay_setcaps (GstPad * pad, GstCaps * caps)
   if (fps
       && gst_video_format_parse_caps_strided (caps, &overlay->format,
           &overlay->width, &overlay->height, &overlay->rowstride)) {
+
+    /* If we got a crop event, use these values instead of the ones from
+       the caps, which are uncropped.
+       FIXME: We get the crop event before caps are set. I am suspicious
+       of whether this is actually correct, and the following would not
+       be needed if events were received after caps are set. */
+    if (overlay->crop_width > 0)
+      overlay->width = overlay->crop_width;
+    if (overlay->crop_height > 0)
+      overlay->height = overlay->crop_height;
+
     ret = gst_pad_set_caps (overlay->srcpad, caps);
   }
 
@@ -1217,6 +1233,7 @@ gst_text_overlay_get_pos (GstTextOverlay * overlay, gint * xpos, gint * ypos)
       *xpos = 0;
   }
   *xpos += overlay->deltax;
+  *xpos += overlay->crop_left;
 
   if (overlay->use_vertical_render)
     valign = GST_TEXT_OVERLAY_VALIGN_TOP;
@@ -1245,6 +1262,7 @@ gst_text_overlay_get_pos (GstTextOverlay * overlay, gint * xpos, gint * ypos)
       break;
   }
   *ypos += overlay->deltay;
+  *ypos += overlay->crop_top;
 }
 
 static inline void
@@ -1863,6 +1881,25 @@ gst_text_overlay_video_event (GstPad * pad, GstEvent * event)
       }
 
       ret = gst_pad_event_default (pad, event);
+      break;
+    }
+    case GST_EVENT_CROP:
+    {
+      gint top, left, width, height;
+      GST_OBJECT_LOCK (overlay);
+      gst_event_parse_crop (event, &top, &left, &width, &height);
+      GST_INFO_OBJECT (overlay, "Crop: %d %d %d %d", top, left, width, height);
+      if (width < 0)
+        width = overlay->width - left;
+      if (height < 0)
+        height = overlay->height - top;
+      overlay->crop_top = top;
+      overlay->crop_left = left;
+      overlay->crop_width = width;
+      overlay->crop_height = height;
+      overlay->width = width;
+      overlay->height = width;
+      GST_OBJECT_UNLOCK (overlay);
       break;
     }
     case GST_EVENT_EOS:

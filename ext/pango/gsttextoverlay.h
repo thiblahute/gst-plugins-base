@@ -128,6 +128,11 @@ struct _GstTextOverlay {
     GstTextOverlayWrapMode      wrap_mode;
     GstTextOverlayLineAlign     line_align;
 
+    gint                        crop_top;
+    gint                        crop_left;
+    gint                        crop_width;
+    gint                        crop_height;
+
     gint                        xpad;
     gint                        ypad;
     gint                        deltax;

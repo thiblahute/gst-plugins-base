@@ -42,6 +42,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include <gst/video/video-crop.h>
+
 G_BEGIN_DECLS
 
 #define GST_TYPE_XVIMAGESINK \
@@ -268,6 +270,9 @@ struct _GstXvImageSink {
 
   /* size of incoming video, used as the size for XvImage */
   guint video_width, video_height;
+
+  /* Size to be croped */
+  GstVideoCrop *crop_rect;
 
   /* display sizes, used for clipping the image */
   gint disp_x, disp_y;

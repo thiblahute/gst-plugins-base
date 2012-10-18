@@ -787,8 +787,10 @@ static gboolean
 gst_xvimagesink_xvimage_put (GstXvImageSink * xvimagesink,
     GstXvImageBuffer * xvimage)
 {
+  GstVideoCrop *crop;
   GstVideoRectangle result;
   gboolean draw_border = FALSE;
+  gint disp_x, disp_y, disp_width, disp_height;
 
   /* We take the flow_lock. If expose is in there we don't want to run
      concurrently from the data flow thread */
@@ -852,6 +854,19 @@ gst_xvimagesink_xvimage_put (GstXvImageSink * xvimagesink,
     xvimagesink->redraw_border = FALSE;
   }
 
+  crop = xvimagesink->crop_rect;
+  if (crop == NULL) {
+    disp_x = xvimagesink->disp_x;
+    disp_y = xvimagesink->disp_y;
+    disp_width = xvimagesink->disp_width;
+    disp_height = xvimagesink->disp_height;
+  } else {
+    disp_x = xvimagesink->disp_x + gst_video_crop_left (crop);
+    disp_y = xvimagesink->disp_y + gst_video_crop_top (crop);
+    disp_width = gst_video_crop_width (crop);
+    disp_height = gst_video_crop_height (crop);
+  }
+
   /* We scale to the window's geometry */
 #ifdef HAVE_XSHM
   if (xvimagesink->xcontext->use_xshm) {
@@ -865,8 +880,7 @@ gst_xvimagesink_xvimage_put (GstXvImageSink * xvimagesink,
         xvimagesink->xcontext->xv_port_id,
         xvimagesink->xwindow->win,
         xvimagesink->xwindow->gc, xvimage->xvimage,
-        xvimagesink->disp_x, xvimagesink->disp_y,
-        xvimagesink->disp_width, xvimagesink->disp_height,
+        disp_x, disp_y, disp_width, disp_height,
         result.x, result.y, result.w, result.h, FALSE);
   } else
 #endif /* HAVE_XSHM */
@@ -875,8 +889,7 @@ gst_xvimagesink_xvimage_put (GstXvImageSink * xvimagesink,
         xvimagesink->xcontext->xv_port_id,
         xvimagesink->xwindow->win,
         xvimagesink->xwindow->gc, xvimage->xvimage,
-        xvimagesink->disp_x, xvimagesink->disp_y,
-        xvimagesink->disp_width, xvimagesink->disp_height,
+        disp_x, disp_y, disp_width, disp_height,
         result.x, result.y, result.w, result.h);
   }
 
@@ -2375,6 +2388,14 @@ gst_xvimagesink_show_frame (GstVideoSink * vsink, GstBuffer * buf)
 
   xvimagesink = GST_XVIMAGESINK (vsink);
 
+  if (gst_buffer_get_video_crop (buf)) {
+    if (xvimagesink->crop_rect)
+      gst_video_crop_unref (xvimagesink->crop_rect);
+
+    xvimagesink->crop_rect =
+        gst_video_crop_ref (gst_buffer_get_video_crop (buf));
+  }
+
   /* If this buffer has been allocated using our buffer management we simply
      put the ximage which is in the PRIVATE pointer */
   if (GST_IS_XVIMAGE_BUFFER (buf)) {
@@ -2454,6 +2475,33 @@ gst_xvimagesink_event (GstBaseSink * sink, GstEvent * event)
 
         g_free (title);
       }
+      break;
+    }
+    case GST_EVENT_CROP:{
+      GstStructure *structure;
+      GstMessage *message;
+      gint left, top, width, height;
+
+      gst_event_parse_crop (event, &top, &left, &width, &height);
+      GST_DEBUG_OBJECT (sink, "Got crop event: %d %d %d %d", top, left, width,
+          height);
+      if (width < 0) {
+        width = GST_VIDEO_SINK_WIDTH (xvimagesink) - left;
+      }
+      if (height < 0) {
+        height = GST_VIDEO_SINK_HEIGHT (xvimagesink) - top;
+      }
+
+      if (xvimagesink->crop_rect)
+        gst_video_crop_unref (xvimagesink->crop_rect);
+      xvimagesink->crop_rect = gst_video_crop_new (top, left, width, height);
+
+      structure = gst_structure_new ("video-size-crop", "width", G_TYPE_INT,
+          width, "height", G_TYPE_INT, height, NULL);
+      message = gst_message_new_application (GST_OBJECT (xvimagesink),
+          structure);
+      gst_bus_post (gst_element_get_bus (GST_ELEMENT (xvimagesink)), message);
+
       break;
     }
     default:
@@ -3451,6 +3499,11 @@ gst_xvimagesink_reset (GstXvImageSink * xvimagesink)
   xvimagesink->have_render_rect = FALSE;
 
   gst_xvimagesink_xcontext_clear (xvimagesink);
+
+  if (xvimagesink->crop_rect) {
+    gst_video_crop_unref (xvimagesink->crop_rect);
+    xvimagesink->crop_rect = NULL;
+  }
 }
 
 /* Finalize is called only once, dispose can be called multiple times.
@@ -3533,6 +3586,8 @@ gst_xvimagesink_init (GstXvImageSink * xvimagesink,
    */
   xvimagesink->colorkey = (8 << 16) | (8 << 8) | 16;
   xvimagesink->draw_borders = TRUE;
+
+  xvimagesink->crop_rect = NULL;
 }
 
 static void

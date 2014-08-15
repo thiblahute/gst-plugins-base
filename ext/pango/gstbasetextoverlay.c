@@ -863,9 +863,9 @@ gst_base_text_overlay_setcaps (GstBaseTextOverlay * overlay, GstCaps * caps)
     ret = FALSE;
   }
 
+  g_mutex_lock (GST_BASE_TEXT_OVERLAY_GET_CLASS (overlay)->pango_lock);
   gst_base_text_overlay_update_wrap_mode (overlay);
   g_mutex_unlock (GST_BASE_TEXT_OVERLAY_GET_CLASS (overlay)->pango_lock);
-  GST_BASE_TEXT_OVERLAY_UNLOCK (overlay);
 
   return ret;
 

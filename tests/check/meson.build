@@ -65,6 +65,7 @@ base_tests = [
   [ 'pipelines/theoraenc', not theoraenc_dep.found(), [ theoraenc_dep ] ],
   [ 'pipelines/vorbisenc', not vorbisenc_dep.found() ],
   [ 'pipelines/vorbisdec', not vorbisenc_dep.found(),],
+  [ 'libs/gstlibscpp', false, [  ], true ],
 ]
 
 # FIXME: enable orc testing
@@ -80,54 +81,77 @@ test_defines = [
   '-UG_DISABLE_ASSERT',
   '-UG_DISABLE_CAST_CHECKS',
   '-DGST_CHECK_TEST_ENVIRONMENT_BEACON="GST_PLUGIN_LOADING_WHITELIST"',
-  '-DGST_TEST_FILES_PATH="' + meson.source_root() + '/tests/files"',
-  '-DGST_TEST_FILE="' + meson.source_root() + '/tests/files/partialframe.mjpeg"', # for libs/discoverer
+  '-DGST_TEST_FILES_PATH="' + meson.current_source_dir() + '/../files"',
+  '-DGST_TEST_FILE="' + meson.current_source_dir() + '/../files/partialframe.mjpeg"', # for libs/discoverer
   '-DGST_USE_UNSTABLE_API',
-]
-
-getpluginsdir = find_program('getpluginsdir')
-runcmd = run_command(getpluginsdir, 'gstreamer', 'gstreamer-1.0')
-if runcmd.returncode() == 0
-  core_plugins_dir = runcmd.stdout().strip()
-  message('Using GStreamer plug-ins in ' + core_plugins_dir)
-else
-  error('Could not determine GStreamer core plugins directory for unit tests.')
-endif
-
-test_env = [
-  'GST_PLUGIN_SYSTEM_PATH_1_0=',
-  'GST_PLUGIN_PATH_1_0=' + meson.build_root() + '/gst:' + meson.build_root() + '/ext:' + meson.build_root() + '/sys:' + core_plugins_dir,
-  'GST_PLUGIN_LOADING_WHITELIST=gstreamer:gst-plugins-base@' + meson.build_root(),
-  'GST_TAG_LICENSE_TRANSLATIONS_DICT=' + meson.source_root() + '/gst-libs/gst/tag/license-translations.dict',
-  'GST_STATE_IGNORE_ELEMENTS=cdio cdparanoiasrc libvisual_ alsasrc alsasink',
-  'CK_DEFAULT_TIMEOUT=20',
 ]
 
 test_deps = [gst_dep, gst_base_dep, gst_net_dep, gst_check_dep, audio_dep,
   video_dep, pbutils_dep, rtp_dep, rtsp_dep, tag_dep, allocators_dep, app_dep,
   fft_dep, riff_dep, sdp_dep, gio_dep] + glib_deps
 
+pluginsdirs = [  ]
+# FIXME: Use if not gst_dep.is_internal() when avalaible as we only support the
+# case where GStreamer is another subproject here.
+if not meson.is_subproject()
+  pkgconfig = find_program('pkg-config')
+  runcmd = run_command(pkgconfig, '--variable=pluginsdir',
+      'gstreamer-' + apiversion)
+
+  if runcmd.returncode() == 0
+      pluginsdirs = runcmd.stdout().split()
+  else
+    error('Could not determine GStreamer core plugins directory for unit tests.')
+  endif
+endif
+
 foreach t : base_tests
   test_name = t.get(0)
+  skip_test = false
   extra_deps = [ ]
-  if t.length() == 3
-    extra_deps = t.get(2)
-    skip_test = t.get(1)
-  elif t.length() == 2
-    skip_test = t.get(1)
-  else
-    skip_test = false
+  is_cpp = false
+
+  if t.length() >= 4
+    is_cpp = t.get(3)
   endif
+
+  if t.length() >= 3
+    extra_deps = t.get(2)
+  endif
+
+  if t.length() >= 2
+    skip_test = t.get(1)
+  endif
+
   if not skip_test
-    exe = executable(test_name, '@0@.c'.format(test_name),
-      include_directories : [configinc],
-      c_args : ['-DHAVE_CONFIG_H=1' ] + test_defines,
-      dependencies : [libm] + test_deps + extra_deps,
-    )
-    test(test_name, exe,
-      env: test_env + ['GST_REGISTRY=@0@/@1@.registry'.format(meson.current_build_dir(), test_name)],
-      timeout: 3 * 60
-    )
+    if not is_cpp
+      exe = executable(test_name, '@0@.c'.format(test_name),
+        include_directories : [configinc],
+        c_args : ['-DHAVE_CONFIG_H=1' ] + test_defines,
+        dependencies : [libm] + test_deps + extra_deps,
+      )
+    else
+      exe = executable(test_name, '@0@.cc'.format(test_name),
+        include_directories : [configinc],
+        cpp_args : gst_plugins_base_args,
+        dependencies : test_deps + extra_deps)
+    endif
+
+    env = environment()
+    env.set('GST_PLUGIN_PATH_1_0', meson.build_root())
+    env.set('GST_PLUGIN_SYSTEM_PATH_1_0', '')
+    env.set('GST_STATE_IGNORE_ELEMENTS', 'cdio cdparanoiasrc libvisual_ alsasrc alsasink')
+    env.set('CK_DEFAULT_TIMEOUT', '20')
+    env.set('GST_TAG_LICENSE_TRANSLATIONS_DICT', gst_tag_dir + '/license-translations.dict')
+    env.set('GST_PLUGIN_LOADING_WHITELIST', 'gstreamer',
+        'gst-plugins-base@' + meson.build_root(), separator=':')
+    env.set('GST_PLUGIN_PATH_1_0', meson.build_root())
+
+    foreach plugindir: pluginsdirs
+      env.append('GST_PLUGIN_PATH_1_0', plugindir)
+    endforeach
+    env.set('GST_REGISTRY', '@0@/@1@.registry'.format(meson.current_build_dir(), test_name))
+    test(test_name, exe, env: env, timeout: 3 * 60)
   endif
 endforeach
 
@@ -138,14 +162,21 @@ foreach group : [1, 2, 3, 4, 5, 6]
       include_directories : [configinc],
       c_args : ['-DHAVE_CONFIG_H=1', '-DVSCALE_TEST_GROUP=@0@'.format(group) ] + test_defines,
       dependencies : [libm] + test_deps + extra_deps)
-  test(vscale_test_name, exe,
-    env: test_env + ['GST_REGISTRY=@0@/@1@.registry'.format(meson.current_build_dir(), test_name)],
-    timeout: 3 * 60)
-endforeach
 
-# ===============> FIXME <==========
-test('gstlibscpp', executable('gstlibscpp', 'libs/gstlibscpp.cc',
-  include_directories : [configinc],
-  cpp_args : gst_plugins_base_args,
-  dependencies : test_deps),
-  env: test_env + [ 'GST_REGISTRY=@0@/gstlibscpp.registry'.format(meson.current_build_dir()) ])
+  # TODO Use env.copy when it is in meson
+  env = environment()
+  env.set('GST_PLUGIN_PATH_1_0', meson.build_root())
+  env.set('GST_PLUGIN_SYSTEM_PATH_1_0', '')
+  env.set('GST_STATE_IGNORE_ELEMENTS', 'cdio cdparanoiasrc libvisual_ alsasrc alsasink')
+  env.set('CK_DEFAULT_TIMEOUT', '20')
+  env.set('GST_TAG_LICENSE_TRANSLATIONS_DICT', gst_tag_dir + '/license-translations.dict')
+  env.set('GST_PLUGIN_LOADING_WHITELIST', 'gstreamer',
+      'gst-plugins-base@' + meson.build_root(), separator=':')
+  env.set('GST_PLUGIN_PATH_1_0', meson.build_root())
+  foreach plugindir: pluginsdirs
+    env.append('GST_PLUGIN_PATH_1_0', plugindir)
+  endforeach
+  env.set('GST_REGISTRY', '@0@/@1@.registry'.format(meson.current_build_dir(), test_name))
+
+  test(vscale_test_name, exe, env: env, timeout: 3 * 60)
+endforeach

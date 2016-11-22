@@ -85,7 +85,7 @@ GstFFTS32 *
 gst_fft_s32_new (gint len, gboolean inverse)
 {
   GstFFTS32 *self;
-  gsize subsize = 0, memneeded;
+  size_t subsize = 0, memneeded;
 
   g_return_val_if_fail (len > 0, NULL);
   g_return_val_if_fail (len % 2 == 0, NULL);

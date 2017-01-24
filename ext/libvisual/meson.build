@@ -3,7 +3,9 @@ libvisual_sources = [
   'plugin.c',
 ]
 
-libvisual_dep = dependency('libvisual-0.4', version : '>= 0.4.0', required : false)
+libvisual_comp = component('libvisual')
+libvisual_dep = dependency('libvisual-0.4', version : '>= 0.4.0', required : false,
+  components: libvisual_comp)
 if libvisual_dep.found()
   core_conf.set_quoted('LIBVISUAL_PLUGINSBASEDIR',
     libvisual_dep.get_pkgconfig_variable('pluginsbasedir'))
@@ -15,5 +17,6 @@ if libvisual_dep.found()
     dependencies : glib_deps + [libvisual_dep, audio_dep, video_dep, pbutils_dep, gst_dep, gst_base_dep],
     install : true,
     install_dir : plugins_install_dir,
+    components: libvisual_comp
   )
 endif

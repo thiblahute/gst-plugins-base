@@ -3,8 +3,12 @@ theora_sources = [
   'gsttheoraparse.c',
 ]
 
-theoradec_dep = dependency('theoradec', version : '>=1.1', required : false)
-theoraenc_dep = dependency('theoraenc', version : '>=1.1', required : false)
+theora_comp = component('theora')
+theoradec_dep = dependency('theoradec', version : '>=1.1', required : false,
+  components: theora_comp)
+theoraenc_dep = dependency('theoraenc', version : '>=1.1', required : false,
+  components: theora_comp)
+
 core_conf.set('HAVE_THEORA', theoradec_dep.found() and theoraenc_dep.found())
 theora_deps = []
 
@@ -17,13 +21,14 @@ if theoradec_dep.found() or theoraenc_dep.found()
     theora_sources += [ 'gsttheoraenc.c' ]
     theora_deps += theoraenc_dep
   endif
-  gsttheora = library('gsttheora',
-    theora_sources,
-    c_args : gst_plugins_base_args,
-    link_args : noseh_link_args,
-    include_directories: [configinc, libsinc],
-    dependencies : theora_deps + glib_deps + [video_dep, tag_dep, gst_dep, gst_base_dep],
-    install : true,
-    install_dir : plugins_install_dir,
-  )
 endif
+gsttheora = library('gsttheora',
+  theora_sources,
+  c_args : gst_plugins_base_args,
+  link_args : noseh_link_args,
+  include_directories: [configinc, libsinc],
+  dependencies : theora_deps + glib_deps + [video_dep, tag_dep, gst_dep, gst_base_dep],
+  install : true,
+  install_dir : plugins_install_dir,
+  components: theora_comp
+)

@@ -15,9 +15,14 @@ vorbisidec_sources = [
   'gstvorbiscommon.c',
 ]
 
-vorbis_dep = dependency('vorbis', version : '>=1.0', required : false)
+vorbis_comp = component('vorbis')
+vorbis_dep = dependency('vorbis', version : '>=1.0', required : false,
+  components: vorbis_comp)
 vorbisenc_dep = dependency('vorbisenc', version : '>=1.0', required : false)
-vorbisidec_dep = dependency('vorbisidec', required : false)
+
+ivorbis_comp = component('ivorbis')
+vorbisidec_dep = dependency('vorbisidec', required : false,
+  components: ivorbis_comp)
 
 if vorbis_dep.found() or vorbisidec_dep.found()
   if cc.has_header_symbol('vorbis/codec.h', 'vorbis_synthesis_restart')
@@ -38,6 +43,7 @@ if vorbis_dep.found()
     dependencies : vorbis_deps + glib_deps + [audio_dep, tag_dep, gst_dep, gst_base_dep],
     install : true,
     install_dir : plugins_install_dir,
+    components: vorbis_comp
   )
 endif
 
@@ -50,5 +56,6 @@ if vorbisidec_dep.found()
     dependencies : glib_deps + [vorbisidec_dep, audio_dep, tag_dep, gst_dep, gst_base_dep],
     install : true,
     install_dir : plugins_install_dir,
+    components: ivorbis_comp
   )
 endif

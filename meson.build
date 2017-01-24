@@ -259,6 +259,7 @@ gir_init_section = [ '--add-init-section=extern void gst_init(gint*,gchar**);' +
     'g_setenv("GST_PLUGIN_SYSTEM_PATH_1_0", "", TRUE);' + \
     'gst_init(NULL,NULL);' ]
 
+plugins_component = component('plugins')
 subdir('gst-libs')
 subdir('gst')
 subdir('ext')

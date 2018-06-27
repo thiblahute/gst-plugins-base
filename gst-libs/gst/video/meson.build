@@ -2,6 +2,7 @@ video_sources = [
   'colorbalance.c',
   'colorbalancechannel.c',
   'convertframe.c',
+  'gsth264encoderinterface.c',
   'gstvideoaffinetransformationmeta.c',
   'gstvideodecoder.c',
   'gstvideoencoder.c',
@@ -37,6 +38,7 @@ video_sources = [
 video_headers = [
   'colorbalance.h',
   'colorbalancechannel.h',
+  'gsth264encoderinterface.h',
   'gstvideoaffinetransformationmeta.h',
   'gstvideodecoder.h',
   'gstvideoencoder.h',

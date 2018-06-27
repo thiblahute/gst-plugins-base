@@ -24,6 +24,7 @@
 
 #include <string.h>
 #include "gstencodebin.h"
+#include "gsth264encodebin.h"
 #include "gstsmartencoder.h"
 #include "gststreamsplitter.h"
 #include "gststreamcombiner.h"
@@ -2340,6 +2341,9 @@ plugin_init (GstPlugin * plugin)
 
   res = gst_element_register (plugin, "encodebin", GST_RANK_NONE,
       GST_TYPE_ENCODE_BIN);
+
+  res = gst_element_register (plugin, "h264encodebin", GST_RANK_PRIMARY + 1,
+      GST_TYPE_H264_ENCODE_BIN);
 
   return res;
 }

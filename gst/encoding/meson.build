@@ -2,6 +2,7 @@ encoding_sources = ['gstencodebin.c',
   'gstsmartencoder.c',
   'gststreamcombiner.c',
   'gststreamsplitter.c',
+  'gsth264encodebin.c',
   ]
 
 gstencoding = library('gstencoding',

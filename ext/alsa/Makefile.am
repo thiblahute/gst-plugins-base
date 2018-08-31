@@ -1,7 +1,7 @@
 plugin_LTLIBRARIES = libgstalsa.la
 
 libgstalsa_la_SOURCES = \
-	gstalsadeviceprobe.c \
+	gstalsadeviceprovider.c \
 	gstalsaplugin.c \
 	gstalsasink.c 	\
 	gstalsasrc.c \

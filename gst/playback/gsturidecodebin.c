@@ -462,7 +462,7 @@ gst_uri_decode_bin_class_init (GstURIDecodeBinClass * klass)
           DEFAULT_USE_BUFFERING, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /**
-   * GstURIDecodeBin::expose-all-streams
+   * GstURIDecodeBin::expose-all-streams:
    *
    * Expose streams of unknown type.
    *
@@ -478,7 +478,7 @@ gst_uri_decode_bin_class_init (GstURIDecodeBinClass * klass)
           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /**
-   * GstURIDecodeBin::ring-buffer-max-size
+   * GstURIDecodeBin::ring-buffer-max-size:
    *
    * The maximum size of the ring buffer in kilobytes. If set to 0, the ring
    * buffer is disabled. Default is 0.

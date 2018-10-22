@@ -32,6 +32,7 @@ libversion = '@0@.@1@.0'.format(soversion, curversion)
 osxversion = curversion + 1
 
 plugins_install_dir = '@0@/gstreamer-1.0'.format(get_option('libdir'))
+plugins = []
 
 cc = meson.get_compiler('c')
 host_system = host_machine.system()
@@ -372,6 +373,7 @@ if get_option('default_library') == 'shared'
   plugins_pkgconfig_install_dir = disabler()
 endif
 
+python3 = import('python').find_installation()
 subdir('gst-libs')
 subdir('gst')
 subdir('ext')
@@ -381,25 +383,14 @@ if not get_option('tools').disabled()
 endif
 subdir('tests')
 subdir('pkgconfig')
-
 # xgettext is optional (on Windows for instance)
 if find_program('xgettext', required : get_option('nls')).found()
   core_conf.set('ENABLE_NLS', 1)
   subdir('po')
 endif
-
-if build_machine.system() == 'windows'
-  message('Disabling gtk-doc while building on Windows')
-else
-  if find_program('gtkdoc-scan', required : get_option('gtk_doc')).found()
-    subdir('docs')
-  else
-    message('Not building documentation as gtk-doc was not found')
-  endif
-endif
+subdir('docs')
 
 # Use core_conf after all subdirs have set values
 configure_file(output : 'config.h', configuration : core_conf)
 
-python3 = import('python').find_installation()
 run_command(python3, '-c', 'import shutil; shutil.copy("hooks/pre-commit.hook", ".git/hooks/pre-commit")')

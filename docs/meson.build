@@ -1,21 +1,35 @@
 html_theme = 'https://github.com/hotdoc/hotdoc_lumen_theme/releases/download/0.6/hotdoc_lumen_theme-0.6.tar.xz?sha256=0e2f175f4cf8c00ed7ac5014e30c806a294b0d3818565eb74e1424a948e8a452'
-hotdoc_p = find_program('hotdoc', required: get_option('doc'))
-build_hotdoc = false
-
-if not hotdoc_p.found()
-    message('Hotdoc not found, not building the documentation')
-    subdir_done()
-endif
 
 hotdoc_extension_dir = []
 required_hotdoc_extensions = ['gi-extension']
 if gst_dep.type_name() == 'internal'
     gst_proj = subproject('gstreamer')
+    plugins_cache_generator = gst_proj.get_variable('plugins_cache_generator')
     if gst_proj.get_variable('build_hotdoc')
         hotdoc_extension_dir = [gst_proj.get_variable('hotdoc_extension_dir')]
     endif
 else
     required_hotdoc_extensions += ['gst-extension']
+    plugins_cache_generator = find_program(join_paths(gst_dep.get_pkg_variable('libexecdir'), 'gstreamer-' + api_version, 'gst-plugins-doc-cache-generator'),
+        required: false)
+endif
+
+plugins_cache = join_paths(meson.current_source_dir(), 'plugins', 'gst_plugins_cache.json')
+if plugins_cache_generator.found()
+    plugins_doc_dep = custom_target('base-plugins-doc-cache',
+        command: [plugins_cache_generator, plugins_cache, '@INPUT@'],
+        input: plugins,
+        output: 'gst_plugins_cache.json',
+    )
+else
+    warning('GStreamer plugin inspector for documentation not found, can\'t update the cache')
+endif
+
+hotdoc_p = find_program('hotdoc', required: get_option('doc'))
+build_hotdoc = false
+if not hotdoc_p.found()
+    message('Hotdoc not found, not building the documentation')
+    subdir_done()
 endif
 
 hotdoc = import('hotdoc')
@@ -121,31 +135,19 @@ endif
 plugins_doc = []
 sitemap = 'all_index.md\n'
 
-cache_file = join_paths(meson.current_source_dir(), 'plugins', 'cache.json')
 list_plugin_res = run_command(python3, '-c',
 '''
 import sys
 import json
 
-try:
-    with open("@0@") as f:
-        print(':'.join(json.load(f).keys()), end='')
-except FileNotFoundError:
-    print("fakery", end='')
-    pass
-'''.format(cache_file))
+with open("@0@") as f:
+    print(':'.join(json.load(f).keys()), end='')
+'''.format(plugins_cache))
 
 assert(list_plugin_res.returncode() == 0,
-  'Could not list plugins from @0@\n@1@\n@1@'.format(cache_file, list_plugin_res.stdout(), list_plugin_res.stderr()))
+  'Could not list plugins from @0@\n@1@\n@1@'.format(plugins_cache, list_plugin_res.stdout(), list_plugin_res.stderr()))
 
-all_plugins_libs = []
-all_plugins_paths = []
-foreach l: plugins
-    all_plugins_libs += [l]
-    all_plugins_paths += l.full_path()
-endforeach
 
-message(list_plugin_res.stdout())
 foreach plugin_name: list_plugin_res.stdout().split(':')
     plugins_doc += [hotdoc.generate_doc(plugin_name,
         project_version: api_version,
@@ -157,13 +159,10 @@ foreach plugin_name: list_plugin_res.stdout().split(':')
                         '../ext/*/*.[ch]',
                         '../gst/*/*.[ch]',
                         ],
-        gst_dl_sources: all_plugins_paths,
-        dependencies: [gst_dep, all_plugins_libs],
+        dependencies: [gst_dep, plugins],
         gst_order_generated_subpages: true,
         extra_extensions_paths: hotdoc_extension_dir,
-        install: false,
-        disable_incremental_build: true,
-        gst_cache_file: join_paths(meson.current_source_dir(), 'plugins', 'cache.json'),
+        gst_cache_file: plugins_cache,
         gst_plugin_name: plugin_name,
         html_theme: html_theme,
     )]

@@ -39,8 +39,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "adder0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -78,7 +77,6 @@
                 ],
                 "klass": "Source",
                 "long-name": "AlsaMidi Source",
-                "name": "alsamidisrc",
                 "pad-templates": {
                     "src": {
                         "caps": "audio/x-midi-event:\n",
@@ -109,8 +107,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "alsamidisrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -165,7 +162,6 @@
                 ],
                 "klass": "Sink/Audio",
                 "long-name": "Audio sink (ALSA)",
-                "name": "alsasink",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n         layout: interleaved\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\naudio/x-ac3:\n         framed: true\naudio/x-eac3:\n         framed: true\naudio/x-dts:\n         framed: true\n     block-size: { (int)512, (int)1024, (int)2048 }\naudio/mpeg:\n    mpegversion: 1\nmpegaudioversion: [ 1, 3 ]\n         parsed: true\n",
@@ -313,8 +309,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "alsasink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -439,7 +434,6 @@
                 ],
                 "klass": "Source/Audio",
                 "long-name": "Audio source (ALSA)",
-                "name": "alsasrc",
                 "pad-templates": {
                     "src": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n         layout: interleaved\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n",
@@ -534,8 +528,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "alsasrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -629,7 +622,6 @@
                 ],
                 "klass": "Generic/Sink",
                 "long-name": "AppSink",
-                "name": "appsink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -744,8 +736,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "appsink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -1004,7 +995,6 @@
                 ],
                 "klass": "Generic/Source",
                 "long-name": "AppSrc",
-                "name": "appsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -1167,8 +1157,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "appsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -1567,7 +1556,6 @@
                 ],
                 "klass": "Filter/Converter/Audio",
                 "long-name": "Audio converter",
-                "name": "audioconvert",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: { (string)interleaved, (string)non-interleaved }\n",
@@ -1623,8 +1611,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "audioconvert0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -1706,7 +1693,6 @@
                 ],
                 "klass": "Generic/Audio",
                 "long-name": "AudioInterleave",
-                "name": "audiointerleave",
                 "pad-templates": {
                     "sink_%%u": {
                         "caps": "audio/x-raw:\n           rate: [ 1, 2147483647 ]\n       channels: 1\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n         layout: { (string)non-interleaved, (string)interleaved }\n",
@@ -1779,8 +1765,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "audiointerleave0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -1854,7 +1839,6 @@
                 ],
                 "klass": "Generic/Audio",
                 "long-name": "AudioMixer",
-                "name": "audiomixer",
                 "pad-templates": {
                     "sink_%%u": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: interleaved\n",
@@ -1912,8 +1896,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "audiomixer0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -1988,7 +1971,6 @@
                 ],
                 "klass": "Generic/Audio",
                 "long-name": "AudioMixer",
-                "name": "liveadder",
                 "pad-templates": {
                     "sink_%%u": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: interleaved\n",
@@ -2046,8 +2028,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "liveadder0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -2129,7 +2110,6 @@
                 ],
                 "klass": "Filter/Effect/Audio",
                 "long-name": "Audio rate adjuster",
-                "name": "audiorate",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: { (string)interleaved, (string)non-interleaved }\n",
@@ -2177,8 +2157,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "audiorate0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -2251,7 +2230,6 @@
                 ],
                 "klass": "Filter/Converter/Audio",
                 "long-name": "Audio resampler",
-                "name": "audioresample",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: { (string)interleaved, (string)non-interleaved }\n",
@@ -2269,8 +2247,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "audioresample0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -2423,7 +2400,6 @@
                 ],
                 "klass": "Source/Audio",
                 "long-name": "Audio test source",
-                "name": "audiotestsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "audio/x-raw:\n         format: { S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE, S8, U8 }\n         layout: { (string)interleaved, (string)non-interleaved }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n",
@@ -2488,8 +2464,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "audiotestsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -2652,7 +2627,6 @@
                 ],
                 "klass": "Source/File",
                 "long-name": "CD Audio (cdda) Source, Paranoia IV",
-                "name": "cdparanoiasrc",
                 "pad-templates": {
                     "src": {
                         "caps": "audio/x-raw:\n         format: S16LE\n         layout: interleaved\n           rate: 44100\n       channels: 2\n",
@@ -2730,8 +2704,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "cdparanoiasrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -2870,7 +2843,6 @@
                 ],
                 "klass": "Generic/Bin/Encoder",
                 "long-name": "Encoder Bin",
-                "name": "encodebin",
                 "pad-templates": {
                     "audio_%%u": {
                         "caps": "ANY",
@@ -2952,8 +2924,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "encodebin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3042,7 +3013,6 @@
                 ],
                 "klass": "Sink/File",
                 "long-name": "GIO sink",
-                "name": "giosink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -3123,8 +3093,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "giosink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3208,7 +3177,6 @@
                 ],
                 "klass": "Source/File",
                 "long-name": "GIO source",
-                "name": "giosrc",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -3254,8 +3222,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "giosrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3301,7 +3268,6 @@
                 ],
                 "klass": "Sink",
                 "long-name": "GIO stream sink",
-                "name": "giostreamsink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -3367,8 +3333,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "giostreamsink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3459,7 +3424,6 @@
                 ],
                 "klass": "Source",
                 "long-name": "GIO stream source",
-                "name": "giostreamsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -3490,8 +3454,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "giostreamsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3561,7 +3524,6 @@
                 ],
                 "klass": "Codec/Parser",
                 "long-name": "Ogg AVI parser",
-                "name": "oggaviparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/x-ogg-avi:\n",
@@ -3579,8 +3541,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "oggaviparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3606,7 +3567,6 @@
                 ],
                 "klass": "Codec/Demuxer",
                 "long-name": "Ogg demuxer",
-                "name": "oggdemux",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/ogg:\naudio/ogg:\nvideo/ogg:\napplication/kate:\n",
@@ -3624,8 +3584,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "oggdemux0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3669,7 +3628,6 @@
                 ],
                 "klass": "Codec/Muxer",
                 "long-name": "Ogg muxer",
-                "name": "oggmux",
                 "pad-templates": {
                     "audio_%%u": {
                         "caps": "audio/x-vorbis:\naudio/x-flac:\naudio/x-speex:\naudio/x-celt:\napplication/x-ogm-audio:\naudio/x-opus:\n",
@@ -3727,8 +3685,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "oggmux0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3762,7 +3719,6 @@
                 ],
                 "klass": "Codec/Parser",
                 "long-name": "Ogg parser",
-                "name": "oggparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/ogg:\n",
@@ -3780,8 +3736,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "oggparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3808,7 +3763,6 @@
                 ],
                 "klass": "Codec/Parser/Audio",
                 "long-name": "OGM audio stream parser",
-                "name": "ogmaudioparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/x-ogm-audio:\n",
@@ -3826,8 +3780,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "ogmaudioparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3872,7 +3825,6 @@
                 ],
                 "klass": "Codec/Decoder/Subtitle",
                 "long-name": "OGM text stream parser",
-                "name": "ogmtextparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/x-ogm-text:\n",
@@ -3890,8 +3842,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "ogmtextparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -3936,7 +3887,6 @@
                 ],
                 "klass": "Codec/Parser/Video",
                 "long-name": "OGM video stream parser",
-                "name": "ogmvideoparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/x-ogm-video:\n",
@@ -3954,8 +3904,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "ogmvideoparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4012,7 +3961,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "OpenGL Alpha Filter",
-                "name": "glalpha",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4098,8 +4046,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glalpha0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4186,7 +4133,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Video balance",
-                "name": "glcolorbalance",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)external-oes }\n\nvideo/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)external-oes }\n",
@@ -4241,8 +4187,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glcolorbalance1",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4288,7 +4233,6 @@
                 ],
                 "klass": "Filter/Converter/Video",
                 "long-name": "OpenGL color converter",
-                "name": "glcolorconvert",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory):\n         format: { RGBA, RGB, RGBx, BGR, BGRx, BGRA, xRGB, xBGR, ARGB, ABGR, Y444, I420, YV12, Y42B, Y41B, NV12, NV21, YUY2, UYVY, AYUV, GRAY8, GRAY16_LE, GRAY16_BE, RGB16, BGR16, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)rectangle, (string)external-oes }\n\nvideo/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, RGB, RGBx, BGR, BGRx, BGRA, xRGB, xBGR, ARGB, ABGR, Y444, I420, YV12, Y42B, Y41B, NV12, NV21, YUY2, UYVY, AYUV, GRAY8, GRAY16_LE, GRAY16_BE, RGB16, BGR16, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)rectangle, (string)external-oes }\n",
@@ -4313,8 +4257,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glcolorconvertelement4",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4351,7 +4294,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "OpenGL color scale",
-                "name": "glcolorscale",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4376,8 +4318,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glcolorscale0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4414,7 +4355,6 @@
                 ],
                 "klass": "Deinterlace",
                 "long-name": "OpenGL deinterlacing filter",
-                "name": "gldeinterlace",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4460,8 +4400,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gldeinterlace0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4498,7 +4437,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Gstreamer OpenGL DifferenceMatte",
-                "name": "gldifferencematte",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4531,8 +4469,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gldifferencematte0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4568,7 +4505,6 @@
                 ],
                 "klass": "Filter/Video",
                 "long-name": "OpenGL downloader",
-                "name": "gldownload",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory):\nvideo/x-raw:\n",
@@ -4593,8 +4529,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gldownloadelement2",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4632,7 +4567,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Gstreamer OpenGL Effects",
-                "name": "gleffects",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4779,8 +4713,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffectsgeneric0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4818,7 +4751,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Blur with 9x9 separable convolution Effect",
-                "name": "gleffects_blur",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4851,8 +4783,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_blur0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4890,7 +4821,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Bulge Effect",
-                "name": "gleffects_bulge",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4923,8 +4853,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_bulge0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -4962,7 +4891,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "FishEye Effect",
-                "name": "gleffects_fisheye",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -4995,8 +4923,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_fisheye0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5034,7 +4961,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Glow Lighting Effect",
-                "name": "gleffects_glow",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5067,8 +4993,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_glow0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5106,7 +5031,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Heat Signature Effect",
-                "name": "gleffects_heat",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5139,8 +5063,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_heat0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5178,7 +5101,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Do nothing Effect",
-                "name": "gleffects_identity",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5211,8 +5133,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_identity0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5250,7 +5171,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Laplacian Convolution Demo Effect",
-                "name": "gleffects_laplacian",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5291,8 +5211,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_laplacian0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5330,7 +5249,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Luma Cross Processing Effect",
-                "name": "gleffects_lumaxpro",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5363,8 +5281,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_lumaxpro0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5402,7 +5319,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Mirror Effect",
-                "name": "gleffects_mirror",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5435,8 +5351,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_mirror0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5474,7 +5389,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Sepia Toning Effect",
-                "name": "gleffects_sepia",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5507,8 +5421,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_sepia0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5546,7 +5459,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "All Grey but Red Effect",
-                "name": "gleffects_sin",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5579,8 +5491,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_sin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5618,7 +5529,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Sobel edge detection Effect",
-                "name": "gleffects_sobel",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5659,8 +5569,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_sobel0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5698,7 +5607,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Square Effect",
-                "name": "gleffects_square",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5731,8 +5639,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_square0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5770,7 +5677,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Squeeze Effect",
-                "name": "gleffects_squeeze",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5803,8 +5709,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_squeeze0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5842,7 +5747,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Stretch Effect",
-                "name": "gleffects_stretch",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5875,8 +5779,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_stretch0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5914,7 +5817,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Light Tunnel Effect",
-                "name": "gleffects_tunnel",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -5947,8 +5849,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_tunnel0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -5986,7 +5887,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Twirl Effect",
-                "name": "gleffects_twirl",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -6019,8 +5919,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_twirl0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6058,7 +5957,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Cross Processing Effect",
-                "name": "gleffects_xpro",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -6091,8 +5989,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_xpro0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6130,7 +6027,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Glowing negative effect",
-                "name": "gleffects_xray",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -6163,8 +6059,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gleffects_xray0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6201,7 +6096,6 @@
                 ],
                 "klass": "Filter/Effect",
                 "long-name": "OpenGL application filter",
-                "name": "glfilterapp",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -6226,8 +6120,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glfilterapp0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6272,7 +6165,6 @@
                 ],
                 "klass": "Filter/Video",
                 "long-name": "GL Filter Bin",
-                "name": "glfilterbin",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:SystemMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:GLMemory):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\nvideo/x-raw:\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -6313,8 +6205,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glfilterbin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6349,7 +6240,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "OpenGL cube filter",
-                "name": "glfiltercube",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -6414,8 +6304,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glfiltercube0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6482,7 +6371,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "OpenGL glass filter",
-                "name": "glfilterglass",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -6507,8 +6395,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glfilterglass0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -6544,7 +6431,6 @@
                 ],
                 "klass": "Sink/Video",
                 "long-name": "GL Sink Bin",
-                "name": "glimagesink",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:SystemMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:GLMemory):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\nvideo/x-raw:\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -6687,8 +6573,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glimagesinkbin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -7033,7 +6918,6 @@
                 ],
                 "klass": "Sink/Video",
                 "long-name": "OpenGL video sink",
-                "name": "glimagesinkelement",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)external-oes }\n\nvideo/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)external-oes }\n",
@@ -7130,8 +7014,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glimagesink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -7466,7 +7349,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Gstreamer OpenGL Overlay",
-                "name": "gloverlay",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -7509,8 +7391,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gloverlay0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -7607,7 +7488,6 @@
                 ],
                 "klass": "Filter/Effect",
                 "long-name": "OpenGL overlaying filter",
-                "name": "gloverlaycompositor",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)rectangle }\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)rectangle }\n\nvideo/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: { (string)2D, (string)rectangle }\n",
@@ -7632,8 +7512,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gloverlaycompositorelement0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -7670,7 +7549,6 @@
                 ],
                 "klass": "Filter/Effect",
                 "long-name": "OpenGL fragment shader filter",
-                "name": "glshader",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -7703,8 +7581,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glfiltershader0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -7775,7 +7652,6 @@
                 ],
                 "klass": "Sink/Video",
                 "long-name": "GL Sink Bin",
-                "name": "glsinkbin",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:SystemMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:GLMemory):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\nvideo/x-raw:\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -7895,8 +7771,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glsinkbin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -7992,7 +7867,6 @@
                 ],
                 "klass": "Src/Video",
                 "long-name": "GL Src Bin",
-                "name": "glsrcbin",
                 "pad-templates": {
                     "src": {
                         "caps": "video/x-raw(ANY):\n",
@@ -8021,8 +7895,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glsrcbin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -8061,7 +7934,6 @@
                 ],
                 "klass": "Codec/Converter",
                 "long-name": "GLStereoSplit",
-                "name": "glstereosplit",
                 "pad-templates": {
                     "left": {
                         "caps": "video/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -8084,8 +7956,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glstereosplit0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -8113,7 +7984,6 @@
                 ],
                 "klass": "Source/Video",
                 "long-name": "Video test source",
-                "name": "gltestsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "video/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -8152,8 +8022,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gltestsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -8291,7 +8160,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "OpenGL transformation filter",
-                "name": "gltransformation",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -8333,8 +8201,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gltransformation1",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -8488,7 +8355,6 @@
                 ],
                 "klass": "Filter/Video",
                 "long-name": "OpenGL uploader",
-                "name": "glupload",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:SystemMemory, meta:GstVideoOverlayComposition):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta, meta:GstVideoOverlayComposition):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:GLMemory):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(memory:DMABuf):\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\nvideo/x-raw:\n         format: { RGBA, BGRA, RGBx, BGRx, ARGB, ABGR, xRGB, xBGR, RGB, BGR, RGB16, BGR16, AYUV, I420, YV12, NV12, NV21, YUY2, UYVY, Y41B, Y42B, Y444, GRAY8, GRAY16_LE, GRAY16_BE, ARGB64 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(meta:GstVideoGLTextureUploadMeta):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -8513,8 +8379,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "gluploadelement2",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -8549,7 +8414,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "OpenGL video flip filter",
-                "name": "glvideoflip",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -8639,8 +8503,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glvideoflip0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -8730,7 +8593,6 @@
                 ],
                 "klass": "Filter",
                 "long-name": "OpenGL Multiview/3D conversion filter",
-                "name": "glviewconvert",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n\nvideo/x-raw(memory:GLMemory):\n         format: RGBA\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n texture-target: 2D\n",
@@ -8892,8 +8754,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "glviewconvertelement0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -9064,7 +8925,6 @@
                 ],
                 "klass": "Codec/Decoder/Audio",
                 "long-name": "Opus audio decoder",
-                "name": "opusdec",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-opus:\nchannel-mapping-family: 0\naudio/x-opus:\nchannel-mapping-family: [ 1, 255 ]\n       channels: [ 1, 255 ]\n   stream-count: [ 1, 255 ]\n  coupled-count: [ 0, 255 ]\n",
@@ -9100,8 +8960,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "opusdec0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -9110,14 +8969,6 @@
                         "construct": false,
                         "construct-only": false,
                         "type-name": "GstObject",
-                        "writable": true
-                    },
-                    "phase-inversion": {
-                        "blurb": "Set to true to enable phase inversion, this will slightly improve stereo quality, but will have side effects when downmixed to mono.",
-                        "construct": false,
-                        "construct-only": false,
-                        "default": "false",
-                        "type-name": "gboolean",
                         "writable": true
                     },
                     "plc": {
@@ -9162,7 +9013,6 @@
                 ],
                 "klass": "Codec/Encoder/Audio",
                 "long-name": "Opus audio encoder",
-                "name": "opusenc",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: S16LE\n         layout: interleaved\n           rate: 48000\n       channels: [ 1, 8 ]\naudio/x-raw:\n         format: S16LE\n         layout: interleaved\n           rate: { (int)8000, (int)12000, (int)16000, (int)24000 }\n       channels: [ 1, 8 ]\n",
@@ -9371,8 +9221,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "opusenc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -9437,7 +9286,6 @@
                 ],
                 "klass": "Filter/Editor/Video",
                 "long-name": "Clock overlay",
-                "name": "clockoverlay",
                 "pad-templates": {
                     "src": {
                         "caps": "video/x-raw:\n         format: { BGRx, RGBx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, I420, YV12, AYUV, YUY2, UYVY, v308, Y41B, Y42B, Y444, NV12, NV21, A420, YUV9, YVU9, IYU1, GRAY8 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(ANY):\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -9579,8 +9427,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "clockoverlay0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -9888,7 +9735,6 @@
                 ],
                 "klass": "Filter/Editor/Video",
                 "long-name": "Text overlay",
-                "name": "textoverlay",
                 "pad-templates": {
                     "src": {
                         "caps": "video/x-raw:\n         format: { BGRx, RGBx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, I420, YV12, AYUV, YUY2, UYVY, v308, Y41B, Y42B, Y444, NV12, NV21, A420, YUV9, YVU9, IYU1, GRAY8 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(ANY):\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -10035,8 +9881,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "textoverlay0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -10335,7 +10180,6 @@
                 ],
                 "klass": "Filter/Editor/Video",
                 "long-name": "Text renderer",
-                "name": "textrender",
                 "pad-templates": {
                     "sink": {
                         "caps": "text/x-raw:\n         format: { pango-markup, utf8 }\n",
@@ -10413,8 +10257,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "textrender0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -10487,7 +10330,6 @@
                 ],
                 "klass": "Filter/Editor/Video",
                 "long-name": "Time overlay",
-                "name": "timeoverlay",
                 "pad-templates": {
                     "src": {
                         "caps": "video/x-raw:\n         format: { BGRx, RGBx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, I420, YV12, AYUV, YUY2, UYVY, v308, Y41B, Y42B, Y444, NV12, NV21, A420, YUV9, YVU9, IYU1, GRAY8 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(ANY):\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -10629,8 +10471,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "timeoverlay0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -10980,7 +10821,6 @@
                 ],
                 "klass": "Generic/Bin/Decoder",
                 "long-name": "Decoder Bin",
-                "name": "decodebin",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -11090,8 +10930,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "decodebin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -11234,7 +11073,6 @@
                 ],
                 "klass": "Generic/Bin/Decoder",
                 "long-name": "Decoder Bin 3",
-                "name": "decodebin3",
                 "pad-templates": {
                     "audio_%%u": {
                         "caps": "ANY",
@@ -11296,8 +11134,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "decodebin3-1",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -11353,7 +11190,6 @@
                 ],
                 "klass": "Generic/Bin/Parser",
                 "long-name": "Parse Bin",
-                "name": "parsebin",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -11405,8 +11241,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "parsebin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -11534,7 +11369,6 @@
                 ],
                 "klass": "Generic/Bin/Player",
                 "long-name": "Player Bin 2",
-                "name": "playbin",
                 "properties": {
                     "async-handling": {
                         "blurb": "The bin will handle Asynchronous state changes",
@@ -11807,8 +11641,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "playbin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -12145,7 +11978,6 @@
                 ],
                 "klass": "Generic/Bin/Player",
                 "long-name": "Player Bin 3",
-                "name": "playbin3",
                 "properties": {
                     "async-handling": {
                         "blurb": "The bin will handle Asynchronous state changes",
@@ -12358,8 +12190,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "playbin3-0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -12385,13 +12216,6 @@
                         "construct": false,
                         "construct-only": false,
                         "type-name": "GstSample",
-                        "writable": false
-                    },
-                    "source": {
-                        "blurb": "Source element",
-                        "construct": false,
-                        "construct-only": false,
-                        "type-name": "GstElement",
                         "writable": false
                     },
                     "subtitle-encoding": {
@@ -12629,7 +12453,6 @@
                 ],
                 "klass": "Generic/Bin/Sink",
                 "long-name": "Player Sink",
-                "name": "playsink",
                 "pad-templates": {
                     "audio_raw_sink": {
                         "caps": "ANY",
@@ -12788,8 +12611,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "playsink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -12909,7 +12731,6 @@
                 ],
                 "klass": "Generic",
                 "long-name": "Stream Synchronizer",
-                "name": "streamsynchronizer",
                 "pad-templates": {
                     "sink_%%u": {
                         "caps": "ANY",
@@ -12927,8 +12748,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "streamsynchronizer0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -12973,7 +12793,6 @@
                 ],
                 "klass": "Video/Overlay/Subtitle",
                 "long-name": "Subtitle Overlay",
-                "name": "subtitleoverlay",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -13020,8 +12839,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "subtitleoverlay0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -13064,7 +12882,6 @@
                 ],
                 "klass": "Generic/Bin/Decoder",
                 "long-name": "URI Decoder",
-                "name": "uridecodebin",
                 "pad-templates": {
                     "src_%%u": {
                         "caps": "ANY",
@@ -13147,8 +12964,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "uridecodebin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -13306,7 +13122,6 @@
                 ],
                 "klass": "Generic/Bin/Decoder",
                 "long-name": "URI Decoder",
-                "name": "uridecodebin3",
                 "pad-templates": {
                     "audio_%%u": {
                         "caps": "ANY",
@@ -13412,8 +13227,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "uridecodebin3-0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -13516,7 +13330,6 @@
                 ],
                 "klass": "Generic/Bin/Source",
                 "long-name": "URI reader",
-                "name": "urisourcebin",
                 "pad-templates": {
                     "src_%%u": {
                         "caps": "ANY",
@@ -13583,8 +13396,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "urisourcebin0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -13635,61 +13447,6 @@
                         "args": [],
                         "retval": "void"
                     },
-                    "autoplug-continue": {
-                        "args": [
-                            "GstPad",
-                            "GstCaps"
-                        ],
-                        "retval": "gboolean"
-                    },
-                    "autoplug-factories": {
-                        "args": [
-                            "GstPad",
-                            "GstCaps"
-                        ],
-                        "retval": "GValueArray"
-                    },
-                    "autoplug-query": {
-                        "args": [
-                            "GstPad",
-                            "GstElement",
-                            "GstQuery"
-                        ],
-                        "retval": "gboolean"
-                    },
-                    "autoplug-select": {
-                        "args": [
-                            "GstPad",
-                            "GstCaps",
-                            "GstElementFactory"
-                        ],
-                        "return-values": [
-                            {
-                                "desc": "GST_AUTOPLUG_SELECT_TRY",
-                                "name": "try",
-                                "value": "0x00000000"
-                            },
-                            {
-                                "desc": "GST_AUTOPLUG_SELECT_EXPOSE",
-                                "name": "expose",
-                                "value": "0x00000001"
-                            },
-                            {
-                                "desc": "GST_AUTOPLUG_SELECT_SKIP",
-                                "name": "skip",
-                                "value": "0x00000002"
-                            }
-                        ],
-                        "retval": "GstAutoplugSelectResult"
-                    },
-                    "autoplug-sort": {
-                        "args": [
-                            "GstPad",
-                            "GstCaps",
-                            "GValueArray"
-                        ],
-                        "retval": "GValueArray"
-                    },
                     "drained": {
                         "args": [],
                         "retval": "void"
@@ -13713,13 +13470,6 @@
                     "source-setup": {
                         "args": [
                             "GstElement"
-                        ],
-                        "retval": "void"
-                    },
-                    "unknown-type": {
-                        "args": [
-                            "GstPad",
-                            "GstCaps"
                         ],
                         "retval": "void"
                     }
@@ -13749,7 +13499,6 @@
                 ],
                 "klass": "Codec/Parser/Audio",
                 "long-name": "rawaudioparse",
-                "name": "rawaudioparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-unaligned-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: { (string)interleaved, (string)non-interleaved }\naudio/x-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: { (string)interleaved, (string)non-interleaved }\naudio/x-alaw:\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\naudio/x-mulaw:\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n",
@@ -13816,8 +13565,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "rawaudioparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -14114,7 +13862,6 @@
                 ],
                 "klass": "Codec/Parser/Video",
                 "long-name": "rawvideoparse",
-                "name": "rawvideoparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-unaligned-raw:\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\nvideo/x-raw:\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -14599,8 +14346,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "rawvideoparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -14677,7 +14423,6 @@
                 ],
                 "klass": "Codec/Parser/Bin/Audio",
                 "long-name": "unalignedaudioparse",
-                "name": "unalignedaudioparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-unaligned-raw:\n         format: { S8, U8, S16LE, S16BE, U16LE, U16BE, S24_32LE, S24_32BE, U24_32LE, U24_32BE, S32LE, S32BE, U32LE, U32BE, S24LE, S24BE, U24LE, U24BE, S20LE, S20BE, U20LE, U20BE, S18LE, S18BE, U18LE, U18BE, F32LE, F32BE, F64LE, F64BE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: { (string)interleaved, (string)non-interleaved }\n",
@@ -14711,8 +14456,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "unalignedaudioparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -14739,7 +14483,6 @@
                 ],
                 "klass": "Codec/Parser/Bin/Video",
                 "long-name": "unalignedvideoparse",
-                "name": "unalignedvideoparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-unaligned-raw:\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -14773,8 +14516,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "unalignedvideoparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -14810,7 +14552,6 @@
                 ],
                 "klass": "Codec/Parser/Subtitle",
                 "long-name": "SSA Subtitle Parser",
-                "name": "ssaparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/x-ssa:\napplication/x-ass:\n",
@@ -14828,8 +14569,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "ssaparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -14855,7 +14595,6 @@
                 ],
                 "klass": "Codec/Parser/Subtitle",
                 "long-name": "Subtitle parser",
-                "name": "subparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "application/x-subtitle:\napplication/x-subtitle-sami:\napplication/x-subtitle-tmplayer:\napplication/x-subtitle-mpl2:\napplication/x-subtitle-dks:\napplication/x-subtitle-qttext:\napplication/x-subtitle-lrc:\napplication/x-subtitle-vtt:\n",
@@ -14873,8 +14612,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "subparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -14930,7 +14668,6 @@
                 ],
                 "klass": "Sink/Network",
                 "long-name": "Multi filedescriptor sink",
-                "name": "multifdsink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -15125,8 +14862,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "multifdsink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -15451,7 +15187,6 @@
                 ],
                 "klass": "Sink/Network",
                 "long-name": "Multi socket sink",
-                "name": "multisocketsink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -15638,8 +15373,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "multisocketsink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -15980,7 +15714,6 @@
                 ],
                 "klass": "Source/Network",
                 "long-name": "socket source",
-                "name": "socketsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -16018,8 +15751,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "socketsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -16085,7 +15817,6 @@
                 ],
                 "klass": "Sink/Network",
                 "long-name": "TCP client sink",
-                "name": "tcpclientsink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -16159,8 +15890,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "tcpclientsink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -16254,7 +15984,6 @@
                 ],
                 "klass": "Source/Network",
                 "long-name": "TCP client source",
-                "name": "tcpclientsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -16293,8 +16022,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "tcpclientsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -16361,7 +16089,6 @@
                 ],
                 "klass": "Sink/Network",
                 "long-name": "TCP server sink",
-                "name": "tcpserversink",
                 "pad-templates": {
                     "sink": {
                         "caps": "ANY",
@@ -16566,8 +16293,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "tcpserversink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -16918,7 +16644,6 @@
                 ],
                 "klass": "Source/Network",
                 "long-name": "TCP server source",
-                "name": "tcpserversrc",
                 "pad-templates": {
                     "src": {
                         "caps": "ANY",
@@ -16967,8 +16692,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "tcpserversrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -17033,7 +16757,6 @@
                 ],
                 "klass": "Codec/Decoder/Video",
                 "long-name": "Theora video decoder",
-                "name": "theoradec",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-theora:\n",
@@ -17051,8 +16774,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "theoradec0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -17119,7 +16841,6 @@
                 ],
                 "klass": "Codec/Encoder/Video",
                 "long-name": "Theora video encoder",
-                "name": "theoraenc",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw:\n         format: { I420, Y42B, Y444 }\n      framerate: [ 1/2147483647, 2147483647/1 ]\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n",
@@ -17233,8 +16954,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "theoraenc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -17306,7 +17026,6 @@
                 ],
                 "klass": "Codec/Parser/Video",
                 "long-name": "Theora video parser",
-                "name": "theoraparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-theora:\n",
@@ -17324,8 +17043,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "theoraparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -17372,7 +17090,6 @@
                 ],
                 "klass": "Filter/Converter/Video",
                 "long-name": "Colorspace converter",
-                "name": "videoconvert",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw:\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(ANY):\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -17601,8 +17318,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "videoconvert0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -17673,7 +17389,6 @@
                 ],
                 "klass": "Filter/Effect/Video",
                 "long-name": "Video rate adjuster",
-                "name": "videorate",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw(ANY):\n\nvideo/x-bayer(ANY):\n\nimage/jpeg(ANY):\n\nimage/png(ANY):\n",
@@ -17749,8 +17464,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "videorate0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -17842,7 +17556,6 @@
                 ],
                 "klass": "Filter/Converter/Video/Scaler",
                 "long-name": "Video scaler",
-                "name": "videoscale",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw:\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 32767 ]\n         height: [ 1, 32767 ]\n      framerate: [ 0/1, 2147483647/1 ]\n\nvideo/x-raw(ANY):\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 32767 ]\n         height: [ 1, 32767 ]\n      framerate: [ 0/1, 2147483647/1 ]\n",
@@ -17965,8 +17678,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "videoscale0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18032,7 +17744,6 @@
                 ],
                 "klass": "Source/Video",
                 "long-name": "Video test source",
-                "name": "videotestsrc",
                 "pad-templates": {
                     "src": {
                         "caps": "video/x-raw:\n         format: { I420, YV12, YUY2, UYVY, AYUV, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n multiview-mode: { (string)mono, (string)left, (string)right }\nvideo/x-bayer:\n         format: { bggr, rggb, grbg, gbrg }\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n      framerate: [ 0/1, 2147483647/1 ]\n multiview-mode: { (string)mono, (string)left, (string)right }\n",
@@ -18261,8 +17972,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "videotestsrc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18484,7 +18194,6 @@
                 ],
                 "klass": "Filter/Effect/Audio",
                 "long-name": "Volume",
-                "name": "volume",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: { F32LE, F64LE, S8, S16LE, S24LE, S32LE }\n           rate: [ 1, 2147483647 ]\n       channels: [ 1, 2147483647 ]\n         layout: interleaved\n",
@@ -18510,8 +18219,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "volume0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18566,7 +18274,6 @@
                 ],
                 "klass": "Codec/Decoder/Audio",
                 "long-name": "Vorbis audio decoder",
-                "name": "vorbisdec",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-vorbis:\n",
@@ -18594,8 +18301,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "vorbisdec0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18640,7 +18346,6 @@
                 ],
                 "klass": "Codec/Encoder/Audio",
                 "long-name": "Vorbis audio encoder",
-                "name": "vorbisenc",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 1\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 2\n   channel-mask: 0x0000000000000003\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 3\n   channel-mask: 0x0000000000000007\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 4\n   channel-mask: 0x0000000000000033\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 5\n   channel-mask: 0x0000000000000037\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 6\n   channel-mask: 0x000000000000003f\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 7\n   channel-mask: 0x0000000000000d0f\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: 8\n   channel-mask: 0x0000000000000c3f\naudio/x-raw:\n         format: F32LE\n         layout: interleaved\n           rate: [ 1, 200000 ]\n       channels: [ 9, 255 ]\n   channel-mask: 0x0000000000000000\n",
@@ -18720,8 +18425,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "vorbisenc0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18775,7 +18479,6 @@
                 ],
                 "klass": "Codec/Parser/Audio",
                 "long-name": "VorbisParse",
-                "name": "vorbisparse",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-vorbis:\n",
@@ -18793,8 +18496,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "vorbisparse0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18821,7 +18523,6 @@
                 ],
                 "klass": "Formatter/Metadata",
                 "long-name": "VorbisTag",
-                "name": "vorbistag",
                 "pad-templates": {
                     "sink": {
                         "caps": "audio/x-vorbis:\n",
@@ -18839,8 +18540,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "vorbistag0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -18878,7 +18578,6 @@
                 ],
                 "klass": "Sink/Video",
                 "long-name": "Video sink",
-                "name": "ximagesink",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw:\n      framerate: [ 0/1, 2147483647/1 ]\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n",
@@ -18976,8 +18675,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "ximagesink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
@@ -19115,7 +18813,6 @@
                 ],
                 "klass": "Sink/Video",
                 "long-name": "Video sink",
-                "name": "xvimagesink",
                 "pad-templates": {
                     "sink": {
                         "caps": "video/x-raw:\n      framerate: [ 0/1, 2147483647/1 ]\n          width: [ 1, 2147483647 ]\n         height: [ 1, 2147483647 ]\n",
@@ -19293,8 +18990,7 @@
                         "blurb": "The name of the object",
                         "construct": true,
                         "construct-only": false,
-                        "default": "xvimagesink0",
-                        "hotdoc-fixed-default": true,
+                        "default": "NULL",
                         "type-name": "gchararray",
                         "writable": true
                     },
